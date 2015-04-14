@@ -14,6 +14,10 @@
 		8856943E1ADDBBDE002127C1 /* Lock8Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8856943D1ADDBBDE002127C1 /* Lock8Tests.m */; };
 		8856944A1ADDBE9E002127C1 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694481ADDBE9E002127C1 /* Login.m */; };
 		8856944B1ADDBE9E002127C1 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = 885694491ADDBE9E002127C1 /* Login.xib */; };
+		889997061ADDC4DB008DFB2C /* Login_iPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997051ADDC4DB008DFB2C /* Login_iPhone5.xib */; };
+		889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997071ADDC667008DFB2C /* Login_iPhone6.xib */; };
+		8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */; };
+		8899970C1ADDC718008DFB2C /* Login_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8899970B1ADDC718008DFB2C /* Login_iPad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,10 @@
 		885694471ADDBE9E002127C1 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login.h; path = Views/Login/Login.h; sourceTree = "<group>"; };
 		885694481ADDBE9E002127C1 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login.m; path = Views/Login/Login.m; sourceTree = "<group>"; };
 		885694491ADDBE9E002127C1 /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login.xib; path = Views/Login/Login.xib; sourceTree = "<group>"; };
+		889997051ADDC4DB008DFB2C /* Login_iPhone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone5.xib; path = Views/Login/Login_iPhone5.xib; sourceTree = "<group>"; };
+		889997071ADDC667008DFB2C /* Login_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6.xib; path = Views/Login/Login_iPhone6.xib; sourceTree = "<group>"; };
+		889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6plus.xib; path = Views/Login/Login_iPhone6plus.xib; sourceTree = "<group>"; };
+		8899970B1ADDC718008DFB2C /* Login_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPad.xib; path = Views/Login/Login_iPad.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +91,7 @@
 			children = (
 				885694251ADDBBDE002127C1 /* AppDelegate.h */,
 				885694261ADDBBDE002127C1 /* AppDelegate.m */,
-				885694471ADDBE9E002127C1 /* Login.h */,
-				885694481ADDBE9E002127C1 /* Login.m */,
-				885694491ADDBE9E002127C1 /* Login.xib */,
+				889997021ADDC214008DFB2C /* Views */,
 				8856942E1ADDBBDE002127C1 /* Images.xcassets */,
 				885694301ADDBBDE002127C1 /* LaunchScreen.xib */,
 				885694211ADDBBDE002127C1 /* Supporting Files */,
@@ -117,6 +123,36 @@
 				8856943C1ADDBBDE002127C1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		889997021ADDC214008DFB2C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				889997031ADDC221008DFB2C /* Login */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		889997031ADDC221008DFB2C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				885694471ADDBE9E002127C1 /* Login.h */,
+				885694481ADDBE9E002127C1 /* Login.m */,
+				889997041ADDC4B2008DFB2C /* Nib */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		889997041ADDC4B2008DFB2C /* Nib */ = {
+			isa = PBXGroup;
+			children = (
+				885694491ADDBE9E002127C1 /* Login.xib */,
+				889997051ADDC4DB008DFB2C /* Login_iPhone5.xib */,
+				889997071ADDC667008DFB2C /* Login_iPhone6.xib */,
+				889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */,
+				8899970B1ADDC718008DFB2C /* Login_iPad.xib */,
+			);
+			name = Nib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,9 +235,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */,
 				885694321ADDBBDE002127C1 /* LaunchScreen.xib in Resources */,
 				8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */,
+				8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */,
+				889997061ADDC4DB008DFB2C /* Login_iPhone5.xib in Resources */,
 				8856944B1ADDBE9E002127C1 /* Login.xib in Resources */,
+				8899970C1ADDC718008DFB2C /* Login_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
