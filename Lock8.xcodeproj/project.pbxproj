@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		885694241ADDBBDE002127C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694231ADDBBDE002127C1 /* main.m */; };
 		885694271ADDBBDE002127C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694261ADDBBDE002127C1 /* AppDelegate.m */; };
-		8856942A1ADDBBDE002127C1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694291ADDBBDE002127C1 /* ViewController.m */; };
-		8856942D1ADDBBDE002127C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8856942B1ADDBBDE002127C1 /* Main.storyboard */; };
 		8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8856942E1ADDBBDE002127C1 /* Images.xcassets */; };
 		885694321ADDBBDE002127C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 885694301ADDBBDE002127C1 /* LaunchScreen.xib */; };
 		8856943E1ADDBBDE002127C1 /* Lock8Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8856943D1ADDBBDE002127C1 /* Lock8Tests.m */; };
+		8856944A1ADDBE9E002127C1 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694481ADDBE9E002127C1 /* Login.m */; };
+		8856944B1ADDBE9E002127C1 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = 885694491ADDBE9E002127C1 /* Login.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +32,14 @@
 		885694231ADDBBDE002127C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		885694251ADDBBDE002127C1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		885694261ADDBBDE002127C1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		885694281ADDBBDE002127C1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		885694291ADDBBDE002127C1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		8856942C1ADDBBDE002127C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8856942E1ADDBBDE002127C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		885694311ADDBBDE002127C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		885694371ADDBBDE002127C1 /* Lock8Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lock8Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8856943C1ADDBBDE002127C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8856943D1ADDBBDE002127C1 /* Lock8Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lock8Tests.m; sourceTree = "<group>"; };
+		885694471ADDBE9E002127C1 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login.h; path = Views/Login/Login.h; sourceTree = "<group>"; };
+		885694481ADDBE9E002127C1 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login.m; path = Views/Login/Login.m; sourceTree = "<group>"; };
+		885694491ADDBE9E002127C1 /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login.xib; path = Views/Login/Login.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +83,9 @@
 			children = (
 				885694251ADDBBDE002127C1 /* AppDelegate.h */,
 				885694261ADDBBDE002127C1 /* AppDelegate.m */,
-				885694281ADDBBDE002127C1 /* ViewController.h */,
-				885694291ADDBBDE002127C1 /* ViewController.m */,
-				8856942B1ADDBBDE002127C1 /* Main.storyboard */,
+				885694471ADDBE9E002127C1 /* Login.h */,
+				885694481ADDBE9E002127C1 /* Login.m */,
+				885694491ADDBE9E002127C1 /* Login.xib */,
 				8856942E1ADDBBDE002127C1 /* Images.xcassets */,
 				885694301ADDBBDE002127C1 /* LaunchScreen.xib */,
 				885694211ADDBBDE002127C1 /* Supporting Files */,
@@ -199,9 +199,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8856942D1ADDBBDE002127C1 /* Main.storyboard in Resources */,
 				885694321ADDBBDE002127C1 /* LaunchScreen.xib in Resources */,
 				8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */,
+				8856944B1ADDBE9E002127C1 /* Login.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8856942A1ADDBBDE002127C1 /* ViewController.m in Sources */,
+				8856944A1ADDBE9E002127C1 /* Login.m in Sources */,
 				885694271ADDBBDE002127C1 /* AppDelegate.m in Sources */,
 				885694241ADDBBDE002127C1 /* main.m in Sources */,
 			);
@@ -244,14 +244,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		8856942B1ADDBBDE002127C1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8856942C1ADDBBDE002127C1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		885694301ADDBBDE002127C1 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -418,6 +410,7 @@
 				885694431ADDBBDE002127C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		885694441ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Lock8Tests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +419,7 @@
 				885694461ADDBBDE002127C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  Login.h
 //  Lock8
 //
 //  Created by Angel Rivas on 4/14/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface Login : UIViewController
 
 @end
-
