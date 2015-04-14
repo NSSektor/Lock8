@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Login : UIViewController
+@interface Login : UIViewController{
+    UITextField* txt_usuario;
+    UITextField* txt_pass;
+    UIButton*     check_button;
+    UIButton*     btn_login;
+    UIButton*     btn_olvide;
+}
 
 @end

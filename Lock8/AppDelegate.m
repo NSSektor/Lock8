@@ -8,16 +8,61 @@
 
 #import "AppDelegate.h"
 
+#import "Login.h"
+
 @interface AppDelegate ()
 
+
 @end
+
+
+NSString* dispositivo;
+NSString* url_web_service;
+NSString* documentsDirectory;
 
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    
+    url_web_service = @"http://201.131.96.37/wbs_tracking5.php?wsdl";
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString* ViewName = @"Login";
+    
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    dispositivo = @"iPhone";
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if (screenSize.height == 568.0f) {
+            ViewName = [ViewName stringByAppendingString:@"_iPhone5"];
+            dispositivo = @"iPhone5";
+        }
+        if (screenSize.height == 667.0f) {
+            ViewName = [ViewName stringByAppendingString:@"_iPhone6"];
+            dispositivo = @"iPhone6";
+        }
+        if (screenSize.height == 736.0f) {
+            ViewName = [ViewName stringByAppendingString:@"_iPhone6plus"];
+            dispositivo = @"iPhone6plus";
+        }
+    } else {
+        //Do iPad stuff here.
+        ViewName = [ViewName stringByAppendingString:@"_iPad"];
+        
+    }
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    Login*  viewController = [[Login alloc] initWithNibName:ViewName bundle:nil];
+    self.window.rootViewController = viewController;
+    [self.window makeKeyAndVisible];
     return YES;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

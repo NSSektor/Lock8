@@ -8,7 +8,11 @@
 
 #import "Login.h"
 
-@interface Login ()
+extern NSString* dispositivo;
+
+@interface Login (){
+    BOOL checked;
+}
 
 @end
 
@@ -16,7 +20,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    
+    UIImageView* img_logo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 100, 60, self.view.frame.size.width - 100, (292 / (681 / (self.view.frame.size.width - 100))))];
+    img_logo.image = [UIImage imageNamed:@"logo"];
+    [self.view addSubview:img_logo];
+    
+    UIView* contenedor_txt = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 2 , self.view.frame.size.width, self.view.frame.size.height / 3)];
+    contenedor_txt.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5];
+    [self.view addSubview:contenedor_txt];
+  /*  if ([dispositivo isEqualToString:@"iPhone5"]) {
+        
+    }
+    else if ([dispositivo isEqualToString:@"iPhone6"]){
+        frame_logo = CGRectMake(20, 60, 300, 128);
+    }else if ([dispositivo isEqualToString:@"iPhone6plus"]){
+        
+    }else if ([dispositivo isEqualToString:@"iPad"]){
+        
+    }*/
+
+    
 }
 
 - (void)didReceiveMemoryWarning {

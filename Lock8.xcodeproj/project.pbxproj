@@ -18,6 +18,7 @@
 		889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997071ADDC667008DFB2C /* Login_iPhone6.xib */; };
 		8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */; };
 		8899970C1ADDC718008DFB2C /* Login_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8899970B1ADDC718008DFB2C /* Login_iPad.xib */; };
+		889997101ADDCB18008DFB2C /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 889997121ADDCB18008DFB2C /* Strings.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,10 @@
 		889997071ADDC667008DFB2C /* Login_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6.xib; path = Views/Login/Login_iPhone6.xib; sourceTree = "<group>"; };
 		889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6plus.xib; path = Views/Login/Login_iPhone6plus.xib; sourceTree = "<group>"; };
 		8899970B1ADDC718008DFB2C /* Login_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPad.xib; path = Views/Login/Login_iPad.xib; sourceTree = "<group>"; };
+		8899970F1ADDCAAA008DFB2C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		889997111ADDCB18008DFB2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Strings.strings; sourceTree = "<group>"; };
+		889997131ADDCB1B008DFB2C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Strings.strings; sourceTree = "<group>"; };
+		889997141ADDCB1C008DFB2C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Strings.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +109,7 @@
 			children = (
 				885694221ADDBBDE002127C1 /* Info.plist */,
 				885694231ADDBBDE002127C1 /* main.m */,
+				889997121ADDCB18008DFB2C /* Strings.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -218,6 +224,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 885694151ADDBBDD002127C1;
 			productRefGroup = 8856941F1ADDBBDE002127C1 /* Products */;
@@ -236,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */,
+				889997101ADDCB18008DFB2C /* Strings.strings in Resources */,
 				885694321ADDBBDE002127C1 /* LaunchScreen.xib in Resources */,
 				8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */,
 				8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */,
@@ -288,8 +296,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				885694311ADDBBDE002127C1 /* Base */,
+				8899970F1ADDCAAA008DFB2C /* es */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		889997121ADDCB18008DFB2C /* Strings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				889997111ADDCB18008DFB2C /* Base */,
+				889997131ADDCB1B008DFB2C /* en */,
+				889997141ADDCB1C008DFB2C /* es */,
+			);
+			name = Strings.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
