@@ -20,6 +20,7 @@ NSString* dispositivo;
 NSString* url_web_service;
 NSString* documentsDirectory;
 
+
 @implementation AppDelegate
 
 
@@ -36,7 +37,7 @@ NSString* documentsDirectory;
     NSString* ViewName = @"Login";
     
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
-    dispositivo = @"iPhone";
+    dispositivo = @"";
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (screenSize.height == 568.0f) {
             ViewName = [ViewName stringByAppendingString:@"_iPhone5"];
@@ -52,6 +53,7 @@ NSString* documentsDirectory;
         }
     } else {
         //Do iPad stuff here.
+        dispositivo = @"iPad";
         ViewName = [ViewName stringByAppendingString:@"_iPad"];
         
     }

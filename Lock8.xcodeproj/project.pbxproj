@@ -19,6 +19,7 @@
 		8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */; };
 		8899970C1ADDC718008DFB2C /* Login_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8899970B1ADDC718008DFB2C /* Login_iPad.xib */; };
 		889997101ADDCB18008DFB2C /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 889997121ADDCB18008DFB2C /* Strings.strings */; };
+		88F295211ADF283B008C7D74 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 88F295201ADF283B008C7D74 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		889997111ADDCB18008DFB2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Strings.strings; sourceTree = "<group>"; };
 		889997131ADDCB1B008DFB2C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Strings.strings; sourceTree = "<group>"; };
 		889997141ADDCB1C008DFB2C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Strings.strings; sourceTree = "<group>"; };
+		88F2951F1ADF283B008C7D74 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		88F295201ADF283B008C7D74 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 			children = (
 				885694251ADDBBDE002127C1 /* AppDelegate.h */,
 				885694261ADDBBDE002127C1 /* AppDelegate.m */,
+				88F2951F1ADF283B008C7D74 /* Reachability.h */,
+				88F295201ADF283B008C7D74 /* Reachability.m */,
 				889997021ADDC214008DFB2C /* Views */,
 				8856942E1ADDBBDE002127C1 /* Images.xcassets */,
 				885694301ADDBBDE002127C1 /* LaunchScreen.xib */,
@@ -269,6 +274,7 @@
 			files = (
 				8856944A1ADDBE9E002127C1 /* Login.m in Sources */,
 				885694271ADDBBDE002127C1 /* AppDelegate.m in Sources */,
+				88F295211ADF283B008C7D74 /* Reachability.m in Sources */,
 				885694241ADDBBDE002127C1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
