@@ -19,6 +19,10 @@
 NSString* dispositivo;
 NSString* url_web_service;
 NSString* documentsDirectory;
+NSString* GlobalString;
+NSString* GlobalUsu;
+NSString*Globalpass;
+
 
 
 @implementation AppDelegate
@@ -29,7 +33,7 @@ NSString* documentsDirectory;
 {
     
     url_web_service = @"http://201.131.96.37/wbs_tracking5.php?wsdl";
-    
+    GlobalString = @"";
     NSArray *paths = NSSearchPathForDirectoriesInDomains
     (NSDocumentDirectory, NSUserDomainMask, YES);
     documentsDirectory = [paths objectAtIndex:0];
