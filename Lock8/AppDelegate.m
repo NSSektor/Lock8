@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <GoogleMaps/GoogleMaps.h>
 #import "Login.h"
 
 @interface AppDelegate ()
@@ -31,6 +31,7 @@ NSString*Globalpass;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:@"AIzaSyCdW9ZhpakPult1DJRhjBL1M1KM4mvBSgY"];
     
     url_web_service = @"http://201.131.96.37/wbs_tracking5.php?wsdl";
     GlobalString = @"";

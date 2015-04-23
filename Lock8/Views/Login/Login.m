@@ -8,6 +8,7 @@
 
 #import "Login.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Unidades.h"
 
 
 extern NSString* dispositivo;
@@ -813,7 +814,14 @@ NSString* busqueda;
         tiempo_unidad_ociosa = contentstiempo_unidad_ociosa;
     }
     
+    NSString* view_name = @"Unidades";
+    if (![dispositivo isEqualToString:@""]) {
+        view_name = [NSString stringWithFormat:@"%@_%@", view_name,dispositivo];
+    }
     
+    Unidades *view = [[Unidades alloc] initWithNibName:view_name bundle:nil];
+    view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:view animated:YES completion:nil];
     
 }
 

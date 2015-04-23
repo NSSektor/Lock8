@@ -39,5 +39,6 @@
 -(void)ActualConnection:(Reachability*)reachability;
 -(NSString*)ReadFileRecordar;
 -(void)EscribirArchivos;
+-(void)FillArray;
 
 @end
