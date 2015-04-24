@@ -22,8 +22,10 @@ NSString* documentsDirectory;
 NSString* GlobalString;
 NSString* GlobalUsu;
 NSString*Globalpass;
-
-
+NSString* vista_activa;
+CGRect rect_original_login;
+CGRect rect_original_unidades;
+UIView* sub_contenedor_incidencia;
 
 @implementation AppDelegate
 

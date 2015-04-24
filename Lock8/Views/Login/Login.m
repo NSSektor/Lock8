@@ -40,6 +40,10 @@ NSString* limite_velocidad;
 NSString* tiempo_unidad_ociosa;
 NSString* mapas;
 NSString* busqueda;
+extern NSString* vista_activa;
+extern CGRect rect_original_login;
+extern CGRect rect_original_unidades;
+extern UIView* sub_contenedor_incidencia;
 
 @interface Login (){
     BOOL checked;
@@ -53,7 +57,6 @@ NSString* busqueda;
     BOOL AjustarTeclado;
     BOOL stayup;
     CGFloat height_keyboard;
-    CGRect rect_original;
     NSString *remoteHostName;
     BOOL reachable;
     SYSoapTool *soapTool;
@@ -61,27 +64,14 @@ NSString* busqueda;
     NSMutableArray* MAUsuarios;
     NSString* metodo_;
     NSString* fileName_Cookies;
+    
 }
 
 @end
 
 @implementation Login
 
-#pragma mark -
-#pragma mark Initialization
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if (self) {
-        // Add Observer
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
-    }
-    
-    return self;
-}
+
 
 -(NSString*)ReadFileRecordar{
     NSString* fileName = [NSString stringWithFormat:@"%@/ConfigFile.txt", documentsDirectory];
@@ -96,6 +86,14 @@ NSString* busqueda;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    vista_activa = @"Login";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
@@ -126,7 +124,7 @@ NSString* busqueda;
     contador_bienvenida = 1;
     
     
-    UIImageView* img_logo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 100, 60, self.view.frame.size.width - 100, (292 / (681 / (self.view.frame.size.width - 100))))];
+    UIImageView* img_logo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - ((self.view.frame.size.width - 100)/2), 60, self.view.frame.size.width - 100, (292 / (681 / (self.view.frame.size.width - 100))))];
     img_logo.image = [UIImage imageNamed:@"logo"];
     [contenedor_general addSubview:img_logo];
     
@@ -134,7 +132,7 @@ NSString* busqueda;
     contenedor_txt.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.8];
     [contenedor_general addSubview:contenedor_txt];
     
-    rect_original = contenedor_general.frame;
+    rect_original_login = contenedor_general.frame;
     
     txt_usuario = [[UITextField alloc] initWithFrame:CGRectMake(10, contenedor_txt.frame.size.height *  0.04, contenedor_txt.frame.size.width - 20, contenedor_txt.frame.size.height *  0.20)];
     txt_usuario.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4];
@@ -142,14 +140,16 @@ NSString* busqueda;
     txt_usuario.placeholder = @"Usuario";
     txt_usuario.keyboardType = UIKeyboardTypeEmailAddress;
     txt_usuario.autocorrectionType = UITextAutocorrectionTypeNo;
+    txt_usuario.textColor = [UIColor whiteColor];
     txt_usuario.delegate = self;
     [contenedor_txt addSubview:txt_usuario];
     
-    txt_pass = [[UITextField alloc] initWithFrame:CGRectMake(10, contenedor_txt.frame.size.height *  0.28, contenedor_txt.frame.size.width - 20, contenedor_txt.frame.size.height *  0.20)];
+    txt_pass = [[UITextField alloc] initWithFrame:CGRectMake(10, contenedor_txt.frame.size.height *  0.30, contenedor_txt.frame.size.width - 20, contenedor_txt.frame.size.height *  0.20)];
     txt_pass.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4];
     txt_pass.placeholder = @"Contraseña";
     txt_pass.secureTextEntry = YES;
     txt_pass.delegate = self;
+    txt_pass.textColor = [UIColor whiteColor];
     [contenedor_txt addSubview:txt_pass];
     
     txt_usuario.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -161,7 +161,7 @@ NSString* busqueda;
     recordar_.textAlignment = NSTextAlignmentRight;
     [contenedor_txt addSubview:recordar_];
     
-    check_button = [[UIButton alloc] initWithFrame:CGRectMake(contenedor_txt.frame.size.width - 10 - (contenedor_txt.frame.size.width * 0.55) - (contenedor_txt.frame.size.height *  0.10), contenedor_txt.frame.size.height *  0.54, contenedor_txt.frame.size.height *  0.065, contenedor_txt.frame.size.height *  0.065)];
+    check_button = [[UIButton alloc] initWithFrame:CGRectMake(contenedor_txt.frame.size.width - 5 - (contenedor_txt.frame.size.width * 0.55) - (contenedor_txt.frame.size.height *  0.10), contenedor_txt.frame.size.height *  0.54, contenedor_txt.frame.size.height *  0.065, contenedor_txt.frame.size.height *  0.065)];
     [check_button addTarget:self action:@selector(check:) forControlEvents:UIControlEventTouchUpInside];
     [check_button setImage:[UIImage imageNamed:@"checkbox-unchecked-gray-md"] forState:UIControlStateNormal];
     [contenedor_txt addSubview:check_button];
@@ -575,27 +575,47 @@ NSString* busqueda;
     [UIView setAnimationDuration:0.2]; // if you want to slide up the view
     [UIView setAnimationBeginsFromCurrentState:YES];
     
-    
-    
-    CGRect rect = contenedor_general.frame;
-    if (moveUp)
-    {
-        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
-        // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        
-        if (rect.origin.y == self.view.frame.origin.y ) {
-            rect.origin.y = rect_original.origin.y - height_keyboard;
+    if ([vista_activa isEqualToString:@"Login"]) {
+        CGRect rect = contenedor_general.frame;
+        if (moveUp)
+        {
+            // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+            // 2. increase the size of the view so that the area behind the keyboard is covered up.
+            
+            if (rect.origin.y == self.view.frame.origin.y ) {
+                rect.origin.y = rect_original_login.origin.y - height_keyboard;
+            }
+            
         }
-        
-    }
-    else
-    {
-        if (stayup == NO) {
-            rect.origin.y = rect_original.origin.y;
+        else
+        {
+            if (stayup == NO) {
+                rect.origin.y = rect_original_login.origin.y;
+            }
         }
+        contenedor_general.frame = rect;
+        [UIView commitAnimations];
     }
-    contenedor_general.frame = rect;
-    [UIView commitAnimations];
+    else{
+ /*       CGRect rect = sub_contenedor_incidencia.frame;
+        if (moveUp)
+        {
+            // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+            // 2. increase the size of the view so that the area behind the keyboard is covered up.
+            
+            if (rect.origin.y == rect_original_unidades.origin.y ) {
+                rect.origin.y = -20;
+            }
+            
+        }
+        else
+        {
+            if (stayup == NO) {
+                rect.origin.y = rect_original_unidades.origin.y;
+            }
+        }
+        sub_contenedor_incidencia.frame = rect;*/
+    }
 }
 
 
@@ -813,6 +833,8 @@ NSString* busqueda;
     else{
         tiempo_unidad_ociosa = contentstiempo_unidad_ociosa;
     }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     NSString* view_name = @"Unidades";
     if (![dispositivo isEqualToString:@""]) {

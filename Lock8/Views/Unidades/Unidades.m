@@ -9,9 +9,7 @@
 #import "Unidades.h"
 #import "TableCellResumen.h"
 #import "Login.h"
-
-#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-
+#import <QuartzCore/QuartzCore.h>
 
 extern NSString* dispositivo;
 extern NSString* GlobalString;
@@ -40,7 +38,10 @@ extern NSString* mapas;
 extern NSString* busqueda;
 extern NSString* tiempo_unidad_ociosa;
 extern NSString* limite_velocidad;
-
+extern NSString* vista_activa;
+extern CGRect rect_original_login;
+extern CGRect rect_original_unidades;
+extern UIView* sub_contenedor_incidencia;
 
 @interface Unidades (){
     BOOL ShowMenu;
@@ -59,34 +60,74 @@ extern NSString* limite_velocidad;
     NSString* NombreFlotaUnidades;
     NSMutableArray* ArrayUnidades;
     NSMutableArray* ArrayUnidadestem;
-    GMSMarker *marker_posicion;
     GMSMarker* marker_unidad;
     CLLocationCoordinate2D position_unidad;
     NSMutableArray* datos_unidad;
     BOOL Show_Mapa;
-    CLLocation *mi_ubicacion;
     SYSoapTool *soapTool;
     NSString* metodo_;
     BOOL cancelar_actualizacion;
     NSString* IP_unidad;
+    BOOL Show_Street;
+    NSMutableArray* descripcion_incidencias;
+    BOOL tengo_incidencias;
+    UIAlertView *setIncidencia;
+    UITextField *txt_incidencia;
+    UIPickerView* pk_incidencia;
+    BOOL Show_Incidencias;
+    NSString* incidencia;
+    NSString* remoteHostName;
+    CGFloat height_keyboard;
+    BOOL reachable;
+    BOOL stayup;
+    NSString* detalle_unidad;
 }
 
 @end
 
 @implementation Unidades
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+  /*  // Add Observer
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShowUnidades:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHideUnidades:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChangedUnidades:) name:kReachabilityChangedNotification object:nil];*/
+    
+    
+    remoteHostName = @"www.apple.com";
+    
+    vista_activa = @"Unidades";
+    
+    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
+    [self.hostReachability startNotifier];
+    [self updateInterfaceWithReachability:self.hostReachability];
+    
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    [self updateInterfaceWithReachability:self.internetReachability];
+    
+    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
+    [self.wifiReachability startNotifier];
+    [self updateInterfaceWithReachability:self.wifiReachability];
+    
     ShowMenu = NO;
     Show_Table_Unidades = NO;
     cancelar_actualizacion = NO;
+    Show_Street = NO;
     Show_Mapa = NO;
+    Show_Incidencias = NO;
     texto_busqueda = @"";
     texto_busqueda_unidad = @"";
     soapTool = [[SYSoapTool alloc]init];
     soapTool.delegate = self;
-    
+    tengo_incidencias = NO;
     
     width_ = 270;
     font_size = 25.0f;
@@ -97,7 +138,7 @@ extern NSString* limite_velocidad;
     contenedor_menu = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width - 50, self.view.frame.size.height)];
     contenedor_menu.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:contenedor_menu];
-    CGRect rect_btn_menu  = CGRectMake( 0, 20, 40, 40);
+    CGRect rect_btn_menu  = CGRectMake( 0, 15, 30, 30);
     
 
    if ([dispositivo isEqualToString:@"iPhone5"]) {
@@ -108,17 +149,17 @@ extern NSString* limite_velocidad;
         size_celda_menu = 44;
         width_ = 325;
         font_size = 28.0f;
-        rect_btn_menu  = CGRectMake(0, 20, 50, 50);
+        rect_btn_menu  = CGRectMake(0, 20, 30, 30);
     }else if ([dispositivo isEqualToString:@"iPhone6plus"]){
         size_celda_menu = 44;
         width_ = 364;
         font_size = 28.0f;
-        rect_btn_menu  = CGRectMake(0, 20, 50, 50);
+        rect_btn_menu  = CGRectMake(0, 20, 30, 30);
     }else if ([dispositivo isEqualToString:@"iPad"]){
         size_celda_menu = 51;
         width_ = 716;
         font_size = 30.0f;
-        rect_btn_menu  = CGRectMake(0, 20, 70, 70);
+        rect_btn_menu  = CGRectMake(0, 10, 70, 70);
     //    rect_botones  = CGRectMake( 0, self.view.frame.size.height - 70, self.view.frame.size.width, 70);
     }
     
@@ -229,7 +270,7 @@ extern NSString* limite_velocidad;
     }
     
     contenedor_botones = [[UIView alloc] initWithFrame:rect_botones];
-    contenedor_botones.backgroundColor = [UIColor colorWithRed:133.0/255.0 green:22.0/255.0 blue:24.0/255.0 alpha:0.8];
+    contenedor_botones.backgroundColor = [UIColor colorWithRed:133.0/255.0 green:22.0/255.0 blue:24.0/255.0 alpha:1.0];
     [contenedor_mapa addSubview:contenedor_botones];
     
     for (int i = 0; i <3; i++) {
@@ -238,21 +279,23 @@ extern NSString* limite_velocidad;
         CGFloat orig_x =  ((contenedor_botones.frame.size.width / 3) /2) - ((600 / (300 / contenedor_botones.frame.size.height)) / 2);
         switch (i) {
             case 0:{
-                 img_ = [[UIImageView alloc] initWithFrame:CGRectMake(orig_x, 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
+                img_ = [[UIImageView alloc] initWithFrame:CGRectMake((contenedor_botones.frame.size.width * 0.16666667) - (600 / (300 / contenedor_botones.frame.size.height)/2), 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
                 img_.image = [UIImage imageNamed:@"actualizar"];
                 btn_ = [[UIButton alloc] initWithFrame:img_.frame];
                 [btn_ addTarget:self action:@selector(ActualizarPosicion:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
             case 1:{
-                img_ = [[UIImageView alloc] initWithFrame:CGRectMake(orig_x + (600 / (300 / contenedor_botones.frame.size.height)) , 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
+                img_ = [[UIImageView alloc] initWithFrame:CGRectMake((contenedor_botones.frame.size.width * 0.5) - (600 / (300 / contenedor_botones.frame.size.height)/2), 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
+                orig_x = orig_x + img_.frame.size.width + img_.frame.origin.x;
                 img_.image = [UIImage imageNamed:@"revision"];
                 btn_ = [[UIButton alloc] initWithFrame:img_.frame];
                 [btn_ addTarget:self action:@selector(SolicitarRevision:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
             case 2:{
-                img_ = [[UIImageView alloc] initWithFrame:CGRectMake(orig_x + (600 / (300 / contenedor_botones.frame.size.height)) + (600 / (300 / contenedor_botones.frame.size.height))  , 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
+               img_ = [[UIImageView alloc] initWithFrame:CGRectMake((contenedor_botones.frame.size.width * 0.83333333) - (600 / (300 / contenedor_botones.frame.size.height)/2), 0, 600 / (300 / contenedor_botones.frame.size.height), contenedor_botones.frame.size.height)];
+                orig_x = orig_x + img_.frame.size.width + img_.frame.origin.x;
                 img_.image = [UIImage imageNamed:@"compartir"];
                 btn_ = [[UIButton alloc] initWithFrame:img_.frame];
                 [btn_ addTarget:self action:@selector(Compartir:) forControlEvents:UIControlEventTouchUpInside];
@@ -268,6 +311,8 @@ extern NSString* limite_velocidad;
     
     
     
+    
+    
     NSString* NibName = @"TableCellResumen";
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:NibName owner:self options:nil];
     contenedor_descripcion_unidad = [nib objectAtIndex:8];
@@ -277,31 +322,105 @@ extern NSString* limite_velocidad;
         contenedor_descripcion_unidad = [nib objectAtIndex:10];
     else if ([dispositivo isEqualToString:@"iPad"])
         contenedor_descripcion_unidad = [nib objectAtIndex:11];
-    contenedor_descripcion_unidad.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.3];
+    
+    contenedor_descripcion_unidad.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
     [contenedor_mapa addSubview:contenedor_descripcion_unidad];
     
-/*    lbl_eco = [uila]
-    lbl_fecha;
-    lbl_evento;
-    lbl_velocidad;
-    lbl_direccion;*/
+
+    UIButton* btn_street = [[UIButton alloc] initWithFrame:contenedor_descripcion_unidad.frame];
+    [btn_street addTarget:self action:@selector(ShowStreetView:) forControlEvents:UIControlEventTouchUpInside];
+    [contenedor_mapa addSubview:btn_street];
+
+    
+    contenedor_street = [[UIView alloc] initWithFrame:contenedor_mapa.frame];
+    [contenedor_mapa addSubview:contenedor_street];
+    contenedor_street.hidden = YES;
+    
+    panoView_ = [[GMSPanoramaView alloc] initWithFrame:contenedor_street.frame];
+    [contenedor_street addSubview:panoView_];
+    
+    contenedor_incidencia = [[UIView alloc] initWithFrame:self.view.frame];
+    contenedor_incidencia.backgroundColor = [UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:0.5];
+    contenedor_incidencia.hidden = YES;
+    [contenedor_vista addSubview:contenedor_incidencia];
+    
+    sub_contenedor_incidencia = [[UIView alloc] initWithFrame:CGRectMake( contenedor_incidencia.frame.size.width / 2  - 150, contenedor_incidencia.frame.size.height / 2  - 150,300,300) ];
+    sub_contenedor_incidencia.backgroundColor = [UIColor whiteColor];
+     [contenedor_incidencia addSubview:sub_contenedor_incidencia];
+    
+    rect_original_unidades = sub_contenedor_incidencia.frame;
+    
+    UILabel* lbl_fo = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, sub_contenedor_incidencia.frame.size.width, 50)];
+    lbl_fo.backgroundColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1];
+    [sub_contenedor_incidencia addSubview:lbl_fo];
     
     
+   
     
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    #ifdef __IPHONE_8_0
-    if(IS_OS_8_OR_LATER) {
-        // Use one or the other, not both. Depending on what you put in info.plist
-        [locationManager requestWhenInUseAuthorization];
-        [locationManager requestAlwaysAuthorization];
+    UILabel* lbl_r = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, sub_contenedor_incidencia.frame.size.width, 20)];
+    lbl_r.text = @"Solicitar revisión";
+    lbl_r.textAlignment = NSTextAlignmentCenter;
+    lbl_r.textColor = [UIColor colorWithRed:133.0/255.0 green:22.0/255.0 blue:24.0/255.0 alpha:1];
+    [sub_contenedor_incidencia addSubview:lbl_r];
+    
+    UIButton* cerrar_incidencia = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+    [cerrar_incidencia addTarget:self action:@selector(ShowIncidencias:) forControlEvents:UIControlEventTouchUpInside];
+    [cerrar_incidencia setImage:[UIImage imageNamed:@"btn_atras"] forState:UIControlStateNormal];
+    [sub_contenedor_incidencia addSubview:cerrar_incidencia];
+    
+    txt_incidencia_seleccionada = [[UITextField alloc] initWithFrame:CGRectMake(30, 60, sub_contenedor_incidencia.frame.size.width - 60, 30)];
+    txt_incidencia_seleccionada.placeholder = @"Seleccione una opcion";
+    txt_incidencia_seleccionada.enabled = NO;
+    [sub_contenedor_incidencia addSubview:txt_incidencia_seleccionada];
+     [txt_incidencia_seleccionada.layer setBorderWidth:1];
+    [txt_incidencia_seleccionada.layer setBorderColor:[UIColor blackColor].CGColor];
+     [txt_incidencia_seleccionada.layer setMasksToBounds:YES];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        txt_incidencia_seleccionada.font = [UIFont fontWithName:@"Helvetica Neue" size:14.0];
+        
     }
-#endif
-    [locationManager startUpdatingLocation];
+    else{
+        
+       txt_incidencia_seleccionada.font = [UIFont fontWithName:@"Helvetica Neue" size:17.0];
+        
+    }
     
     
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    UIButton* btn_seleccionar_incidencia = [[UIButton alloc] initWithFrame:CGRectMake(sub_contenedor_incidencia.frame.size.width - 60, 60, 30, 30)];
+    [btn_seleccionar_incidencia setImage:[UIImage imageNamed:@"btn_abajo"] forState:UIControlStateNormal];
+    [btn_seleccionar_incidencia addTarget:self action:@selector(ShowListaIncidencias:) forControlEvents:UIControlEventTouchUpInside];
+    [sub_contenedor_incidencia addSubview:btn_seleccionar_incidencia];
+    [btn_seleccionar_incidencia.layer setBorderWidth:1];
+    [btn_seleccionar_incidencia.layer setBorderColor:[UIColor blackColor].CGColor];
+    [btn_seleccionar_incidencia.layer setMasksToBounds:YES];
+    
+    txt_descripcion_incidencia = [[UITextView alloc] initWithFrame:CGRectMake(30, 100 , txt_incidencia_seleccionada.frame.size.width + btn_seleccionar_incidencia.frame.size.width - 30, 160 )];
+    txt_descripcion_incidencia.backgroundColor = [UIColor whiteColor];
+    txt_descripcion_incidencia.delegate = self;
+    txt_descripcion_incidencia.text = @"Proporcione más información sobre su incidencia";
+    txt_descripcion_incidencia.textColor = [UIColor lightGrayColor];
+    [txt_descripcion_incidencia.layer setBorderWidth:1];
+    [txt_descripcion_incidencia.layer setBorderColor:[UIColor blackColor].CGColor];
+    [txt_descripcion_incidencia.layer setMasksToBounds:YES];
+    [sub_contenedor_incidencia addSubview:txt_descripcion_incidencia];
+    
+    tbl_incidencias = [[UITableView alloc] initWithFrame:txt_descripcion_incidencia.frame];
+    tbl_incidencias.backgroundColor= [UIColor whiteColor];
+    tbl_incidencias.separatorColor = [UIColor whiteColor];
+    tbl_incidencias.dataSource = self;
+    tbl_incidencias.delegate = self;
+    tbl_incidencias.hidden = YES;
+    [sub_contenedor_incidencia addSubview:tbl_incidencias];
+    
+    
+    UIButton* btn_enviar_incidencia = [[UIButton alloc] initWithFrame:CGRectMake(0, 270, sub_contenedor_incidencia.frame.size.width, 30)];
+    [btn_enviar_incidencia setTitle:@"Entrar" forState:UIControlStateNormal];
+    [btn_enviar_incidencia addTarget:self action:@selector(EnviarIncidencia:) forControlEvents:UIControlEventTouchUpInside];
+    [btn_enviar_incidencia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
+    btn_enviar_incidencia.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:34.0/255.0 blue:36.0/255.0 alpha:1];
+    [sub_contenedor_incidencia addSubview:btn_enviar_incidencia];
+
     contenedor_invisible = [[UIView alloc]initWithFrame:self.view.frame];
     contenedor_invisible.backgroundColor = [UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:0.5];
     contenedor_invisible.hidden = YES;
@@ -371,7 +490,7 @@ extern NSString* limite_velocidad;
     lbl_.textAlignment = NSTextAlignmentCenter;
     [contenedor_cancelar addSubview:lbl_];
     
-    UIButton* btn_cancelar = [[UIButton alloc] initWithFrame:CGRectMake(0, 35, contenedor_cancelar.frame.size.width, 25)];
+    UIButton* btn_cancelar = [[UIButton alloc] initWithFrame:CGRectMake(10, 35, contenedor_cancelar.frame.size.width - 20, 20)];
     [btn_cancelar setTitle:@"Cancelar" forState:UIControlStateNormal];
     [btn_cancelar addTarget:self action:@selector(Cancelar_Actualizacion_unidad:) forControlEvents:UIControlEventTouchUpInside];
     [btn_cancelar setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
@@ -380,6 +499,110 @@ extern NSString* limite_velocidad;
     
     contenedor_cancelar.hidden = YES;
     
+    pk_incidencia = [[UIPickerView alloc] init];
+    pk_incidencia.dataSource = self;
+    pk_incidencia.delegate = self;
+    
+}
+
+- (void) reachabilityChangedUnidades:(NSNotification *)note
+{
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:curReach];
+}
+
+- (void)updateInterfaceWithReachability:(Reachability *)reachability
+{
+    if (reachability == self.hostReachability)
+    {
+        //  NetworkStatus netStatus = [reachability currentReachabilityStatus];
+        BOOL connectionRequired = [reachability connectionRequired];
+        if (connectionRequired)
+            NSLog(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established., Reachability text if a connection is required");
+        else
+            NSLog(@"Cellular data network is active.\nInternet traffic will be routed through it. Reachability text if a connection is not required");
+    }
+    
+    if (reachability == self.internetReachability)
+        [self ActualConnection:reachability];
+    if (reachability == self.wifiReachability)
+        [self ActualConnection:reachability];
+}
+
+-(void)ActualConnection:(Reachability*)reachability{
+    NetworkStatus netStatus = [reachability currentReachabilityStatus];
+    BOOL connectionRequired = [reachability connectionRequired];
+    
+    
+    switch (netStatus)
+    {
+        case NotReachable:{
+            reachable = NO;
+            connectionRequired = YES;
+            break;
+        }
+        case ReachableViaWWAN:{
+            reachable = YES;
+            NSLog(@"Reachable WWAN");
+            break;
+        }
+        case ReachableViaWiFi:{
+            reachable = YES;
+            NSLog(@"Reachable WiFi");
+            break;
+        }
+    }
+    
+    if (connectionRequired)
+    {
+        NSLog(@"Connection Required");
+        reachable = NO;
+        //   NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
+        //     statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
+    }
+    
+}
+
+- (void)keyboardWillHideUnidades:(NSNotification *)notif {
+    height_keyboard = [[notif.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey ] CGRectValue].size.height;
+    [self setViewMoveUp:NO];
+}
+
+
+- (void)keyboardWillShowUnidades:(NSNotification *)notif{
+    height_keyboard = [[notif.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey ] CGRectValue].size.height;
+    [self setViewMoveUp:YES];
+}
+
+//method to move the view up/down whenever the keyboard is shown/dismissed
+-(void)setViewMoveUp:(BOOL)moveUp
+{
+    /*[UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2]; // if you want to slide up the view
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    
+    
+    CGRect rect = sub_contenedor_incidencia.frame;
+    if (moveUp)
+    {
+        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+        
+        if (rect.origin.y == self.view.frame.origin.y ) {
+            rect.origin.y = rect_original_unidades.origin.y - height_keyboard;
+        }
+        
+    }
+    else
+    {
+        if (stayup == NO) {
+            rect.origin.y = rect_original_unidades.origin.y;
+        }
+    }
+    sub_contenedor_incidencia.frame = rect;
+    [UIView commitAnimations];*/
 }
 
 -(void)retriveFromSYSoapTool:(NSMutableArray *)_data{
@@ -461,7 +684,7 @@ extern NSString* limite_velocidad;
     
      if ([metodo_ isEqualToString:@"DameIncidencias"]){
         if ([elementName isEqualToString:@"descripcion"]) {
-        //    [descripcion_incidencias addObject:currentElementString];
+            [descripcion_incidencias addObject:currentElementString];
         }
     }
     else if ([metodo_ isEqualToString:@"SendCommand"]){
@@ -514,19 +737,19 @@ extern NSString* limite_velocidad;
     contenedor_animacion.hidden = YES;
     contenedor_cancelar.hidden = YES;
     if([metodo_ isEqualToString:@"DameIncidencias"]){
-   /*     if ([descripcion_incidencias count]>0) {
-            [pickerview reloadAllComponents];
+        if ([descripcion_incidencias count]>0) {
+            [tbl_incidencias reloadData];
             contenedor_animacion.hidden = YES;
             tengo_incidencias = YES;
-            [self ShowIncidencia:self];
+            [self ShowIncidencias:self];
         }
         else{
-            [[[UIAlertView alloc] initWithTitle:@"Tracking" message:@"No se pudo completar la petición intente de nuevo" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil, nil] show];
-        }*/
+            [[[UIAlertView alloc] initWithTitle:@"Loc8" message:@"No se pudo completar la petición intente de nuevo" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil, nil] show];
+        }
     }
     else if ([metodo_ isEqualToString:@"Incidencia"]){
-     /*   NSString* mensajeAlerta = StringMsg;
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Tracking"
+        NSString* mensajeAlerta = StringMsg;
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Loc8"
                                                           message:mensajeAlerta
                                                          delegate:nil
                                                 cancelButtonTitle:@"Aceptar"
@@ -534,7 +757,7 @@ extern NSString* limite_velocidad;
         
         [message show];
         //txt incidencia = @"";
-        [self ShowIncidencia:self];*/
+        [self ShowIncidencias:self];
     }
     else if ([metodo_ isEqualToString:@"SendCommand"]){
         [self CargarMapa];
@@ -549,15 +772,53 @@ extern NSString* limite_velocidad;
 
 -(IBAction)Atras:(id)sender{
     
-    if (Show_Mapa) {
-        [self ShowMapa:self];
-    }
-    else{
-        if (Show_Table_Unidades) {
-            [self ShowTableUnidades:self];
+    if (Show_Street) {
+        [self ShowStreetView:self];
+    }else{
+        if (Show_Mapa) {
+            [self ShowMapa:self];
+        }
+        else{
+            if (Show_Table_Unidades) {
+                [self ShowTableUnidades:self];
+            }
         }
     }
+}
+
+-(IBAction)EnviarIncidencia:(id)sender{
+    NSString *cadena = txt_incidencia_seleccionada.text;
+    NSString *cadenaSinEspacios = [cadena stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
+    if ([cadenaSinEspacios isEqualToString:(@"")]) {
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Loc8"
+                                                          message:@"Debe escribir un comentario"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"Aceptar"
+                                                otherButtonTitles:nil];
+        [message show];
+        
+    }
+    else{
+        if (reachable) {
+            metodo_ = @"Incidencia";
+            contenedor_animacion.hidden = NO;
+            contenedor_cancelar.hidden = YES;
+            NSMutableArray *tags = [[NSMutableArray alloc]initWithObjects:@"usName", @"usPassword", @"Tipo", @"Comentarios", @"Eco", @"IP", nil];
+            NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:GlobalUsu, Globalpass, incidencia, txt_incidencia.text, detalle_unidad, IP_unidad, nil];
+            [soapTool callSoapServiceWithParameters__functionName:@"Incidencia" tags:tags vars:vars wsdlURL:url_web_service];
+        }else{
+            [[[UIAlertView alloc] initWithTitle:@"Loc8"
+                                       message:@"No existe conexión a internet"
+                                      delegate:nil
+                             cancelButtonTitle:@"Aceptar"
+                              otherButtonTitles:nil] show];
+        }
+        
+        
+        
+    }
 }
 
 -(IBAction)ShowMenu:(id)sender{
@@ -598,7 +859,7 @@ extern NSString* limite_velocidad;
         }
         Show_Table_Unidades = NO;
         btn_atras.hidden = YES;
-        btn_menu.hidden = YES;
+        btn_menu.hidden = NO;
         frame_tbl_unidades.origin.x = self.view.frame.size.width;
     }
     
@@ -627,6 +888,76 @@ extern NSString* limite_velocidad;
     [UIView commitAnimations];
 }
 
+-(IBAction)ShowStreetView:(id)sender{
+    if (Show_Street==NO) {
+        Show_Street = YES;
+        contenedor_street.hidden = NO;
+    }
+    else{
+        Show_Street = NO;
+        contenedor_street.hidden = YES;
+    }
+    
+    [UIView beginAnimations:Nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    [UIView commitAnimations];
+}
+
+-(IBAction)ShowIncidencias:(id)sender{
+    
+    if (tengo_incidencias) {
+        if (Show_Incidencias==NO) {
+            Show_Incidencias = YES;
+            contenedor_incidencia.hidden = NO;
+        }
+        else{
+            Show_Incidencias = NO;
+            contenedor_incidencia.hidden = YES;
+        }
+        
+        [UIView beginAnimations:Nil context:nil];
+        [UIView setAnimationDuration:0.2];
+        [UIView commitAnimations];
+    }else{
+        
+        if (reachable) {
+            contenedor_animacion.hidden = NO;
+            contenedor_cancelar.hidden = YES;
+            descripcion_incidencias = [[NSMutableArray alloc]init];
+            NSMutableArray *tags = [[NSMutableArray alloc]initWithObjects:@"usName", @"usPassword", nil];
+            NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:GlobalUsu, Globalpass, nil];
+            metodo_ = @"DameIncidencias";
+            [soapTool callSoapServiceWithParameters__functionName:@"DameIncidencias" tags:tags vars:vars wsdlURL:url_web_service];
+        }else{
+            [[[UIAlertView alloc] initWithTitle:@"Loc8"
+                                        message:@"No existe conexión a internet"
+                                       delegate:nil
+                              cancelButtonTitle:@"Aceptar"
+                              otherButtonTitles:nil] show];
+        }
+        
+        
+    }
+}
+
+-(IBAction)ShowListaIncidencias:(id)sender{
+    /*//create the alertview
+    setIncidencia = [[UIAlertView alloc] initWithTitle:@"Incidencia"
+                                              message:nil
+                                             delegate:self
+                                    cancelButtonTitle:@"Aceptar"
+                                    otherButtonTitles:nil, nil];
+    setIncidencia.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    txt_incidencia = [setIncidencia textFieldAtIndex:0];
+    //change the textfields inputView to the date picker
+    txt_incidencia.inputView = pk_incidencia;
+    
+    [setIncidencia show];*/
+    
+    tbl_incidencias.hidden = NO;
+    
+}
 
 
 -(NSInteger)ContarUnidades:(NSString*)NombreArregloAContar{
@@ -643,16 +974,24 @@ extern NSString* limite_velocidad;
 }
 
 -(IBAction)ActualizarPosicion:(id)sender{
-    contenedor_animacion.hidden = NO;
-    cancelar_actualizacion = NO;
-    contenedor_cancelar.hidden = NO;
-    metodo_ = @"SendCommand";
-    NSMutableArray *tags = [[NSMutableArray alloc]initWithObjects:@"usName", @"usPassword", @"identificador_unidad", @"comando", @"velocidad", nil];
-    NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:GlobalUsu, Globalpass, IP_unidad, @"gps_now", limite_velocidad,nil];
-    [soapTool callSoapServiceWithParameters__functionName:@"SendCommand" tags:tags vars:vars wsdlURL:url_web_service];
+    if (reachable) {
+        contenedor_animacion.hidden = NO;
+        cancelar_actualizacion = NO;
+        contenedor_cancelar.hidden = NO;
+        metodo_ = @"SendCommand";
+        NSMutableArray *tags = [[NSMutableArray alloc]initWithObjects:@"usName", @"usPassword", @"identificador_unidad", @"comando", @"velocidad", nil];
+        NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:GlobalUsu, Globalpass, IP_unidad, @"gps_now", limite_velocidad,nil];
+        [soapTool callSoapServiceWithParameters__functionName:@"SendCommand" tags:tags vars:vars wsdlURL:url_web_service];
+    }else{
+        [[[UIAlertView alloc] initWithTitle:@"Loc8"
+                                    message:@"No existe conexión a internet"
+                                   delegate:nil
+                          cancelButtonTitle:@"Aceptar"
+                          otherButtonTitles:nil] show];
+    }
 }
 -(IBAction)SolicitarRevision:(id)sender{
-    
+    [self ShowIncidencias:self];
 }
 -(IBAction)Compartir:(id)sender{
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -701,6 +1040,8 @@ extern NSString* limite_velocidad;
         retorno = [ArrayNombreFlotasSearch count];
     else if (tableView == tbl_unidades)
         retorno = [ArrayUnidadestem count];
+    else if (tableView == tbl_incidencias)
+        retorno = [descripcion_incidencias count];
     return retorno;
 }
 
@@ -823,6 +1164,32 @@ extern NSString* limite_velocidad;
         cell_.selectionStyle = UITableViewCellSelectionStyleNone;
         cell = cell_;
     }
+    else if (tableView == tbl_incidencias){
+        cell  = [tableView dequeueReusableCellWithIdentifier:@"celda"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"celda"];
+        }
+        
+        cell.textLabel.text = [descripcion_incidencias objectAtIndex:indexPath.row];
+         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+              cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14.0];
+            
+        }
+        else{
+            
+            cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:17.0];
+            
+        }
+        
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.selectionStyle =  UITableViewCellSelectionStyleGray;
+ /*       UIView* separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 2, self.view.frame.size.width - 10, 1)];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 2, self.view.frame.size.width - 10, 1)];
+        
+        separatorLineView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1]; // set color as you want.
+        [cell.contentView addSubview:separatorLineView];*/
+    }
     
     return cell;
     
@@ -831,9 +1198,11 @@ extern NSString* limite_velocidad;
 //Change the Height of the Cell [Default is 44]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    float retorno = 50;
+    float retorno = 30;
     if (tableView==tbl_unidades)
         retorno = 100;
+    if (tableView==tbl_flotas)
+        retorno = 50;
 
     return retorno;
 }
@@ -878,6 +1247,14 @@ extern NSString* limite_velocidad;
         datos_unidad = [ArrayUnidadestem objectAtIndex:indexPath.row];
         [self CargarMapa];
         [self ShowMapa:self];
+    }else if (tableView == tbl_incidencias){
+        
+        incidencia = [descripcion_incidencias objectAtIndex:indexPath.row];
+        incidencia = [incidencia stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        txt_incidencia_seleccionada.text = [NSString stringWithFormat:@"  %@", incidencia];
+        tbl_incidencias.hidden = YES;
+        
     }
     
     
@@ -891,6 +1268,7 @@ extern NSString* limite_velocidad;
     IP_unidad = [IP_unidad stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     lbl_nombre_unidad.text = [datos_unidad objectAtIndex:1];
+    detalle_unidad = [datos_unidad objectAtIndex:1];
     
     NSString* velocidad = [datos_unidad objectAtIndex:7];
     if ([[datos_unidad objectAtIndex:9] isEqualToString:@"SIN REPORTAR"]) {
@@ -920,32 +1298,18 @@ extern NSString* limite_velocidad;
     
     [mapView_ clear];
     
-    GMSMutablePath *path = [GMSMutablePath path];
     
     marker_unidad = [[GMSMarker alloc] init];
     marker_unidad.position = CLLocationCoordinate2DMake([[datos_unidad objectAtIndex:4] doubleValue], [[datos_unidad objectAtIndex:5] doubleValue]);
-    marker_unidad.icon = [UIImage imageNamed:@"ubicacion_unidad"];
+    marker_unidad.icon = [UIImage imageNamed:@"marker_auto"];
     marker_unidad.map = mapView_;
-    [path addCoordinate: marker_unidad.position];
     
-    NSString* latitud = [NSString stringWithFormat:@"%f", mi_ubicacion.coordinate.latitude];
-    NSString* longitud = [NSString stringWithFormat:@"%f", mi_ubicacion.coordinate.longitude];
+    GMSCameraPosition *sydney = [GMSCameraPosition cameraWithLatitude:[[datos_unidad objectAtIndex:4] doubleValue]
+                                                            longitude:[[datos_unidad objectAtIndex:5] doubleValue]
+                                                                 zoom:5];
+    [mapView_ setCamera:sydney];
     
-    marker_posicion = [[GMSMarker alloc] init];
-    marker_posicion.position = CLLocationCoordinate2DMake([latitud doubleValue], [longitud doubleValue]);
-    marker_posicion.icon = [UIImage imageNamed:@"mi_ubicacion"];
-    marker_posicion.map = mapView_;
-    [path addCoordinate: marker_posicion.position];
-    GMSCoordinateBounds*  bounds = [[GMSCoordinateBounds alloc] initWithPath:path];
-    [mapView_ moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50.0]];
-}
-
-
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    mi_ubicacion = [[CLLocation alloc] initWithLatitude:newLocation.coordinate.latitude
-                                              longitude:newLocation.coordinate.longitude];
+    [panoView_ moveNearCoordinate:CLLocationCoordinate2DMake([[datos_unidad objectAtIndex:4] doubleValue], [[datos_unidad objectAtIndex:5] doubleValue])];
 }
 
 
@@ -1132,6 +1496,100 @@ extern NSString* limite_velocidad;
     [self.view endEditing:YES];
     [super touchesBegan:touches withEvent:event];
 }
+
+- (NSInteger)numberOfComponentsInPickerView:
+(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component
+{
+    return descripcion_incidencias.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component
+{
+    incidencia = [descripcion_incidencias objectAtIndex:row];
+    incidencia = [incidencia stringByTrimmingCharactersInSet:
+                  [NSCharacterSet whitespaceCharacterSet]];
+    incidencia = [incidencia stringByTrimmingCharactersInSet:
+                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return incidencia;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    incidencia = [descripcion_incidencias objectAtIndex:row];
+    incidencia = [incidencia stringByTrimmingCharactersInSet:
+                  [NSCharacterSet whitespaceCharacterSet]];
+    incidencia = [incidencia stringByTrimmingCharactersInSet:
+                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    txt_incidencia.text = incidencia;
+    txt_incidencia_seleccionada.text = incidencia;
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view {
+    UILabel *pickerLabel = (UILabel *)view;
+    if (pickerLabel == nil) {
+        
+        CGRect frame;
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            frame = CGRectMake(0.0, 0.0, 299, 30);
+        }
+        else{
+            frame = CGRectMake(0.0, 0.0, 650, 60);
+        }
+        
+        //label size
+        
+        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
+        //here you can play with fonts
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            [pickerLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
+        }
+        else{
+            [pickerLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:17.0]];
+        }
+        
+    }
+    //picker view array is the datasource
+    NSString *trimmedString = [[descripcion_incidencias objectAtIndex:row] stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]];
+    trimmedString = [[descripcion_incidencias objectAtIndex:row] stringByTrimmingCharactersInSet:
+                     [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [pickerLabel setText:trimmedString];
+    return pickerLabel;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Proporcione más información sobre su incidencia"]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Proporcione más información sobre su incidencia";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
+}
+
+
 
 /*
 #pragma mark - Navigation

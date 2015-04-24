@@ -56,13 +56,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8856941E1ADDBBDE002127C1 /* Lock8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lock8.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8856941E1ADDBBDE002127C1 /* Loc8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loc8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		885694221ADDBBDE002127C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		885694231ADDBBDE002127C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		885694251ADDBBDE002127C1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		885694261ADDBBDE002127C1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8856942E1ADDBBDE002127C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		885694371ADDBBDE002127C1 /* Lock8Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lock8Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		885694371ADDBBDE002127C1 /* Loc8Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Loc8Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8856943C1ADDBBDE002127C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8856943D1ADDBBDE002127C1 /* Lock8Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lock8Tests.m; sourceTree = "<group>"; };
 		885694471ADDBE9E002127C1 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login.h; path = Views/Login/Login.h; sourceTree = "<group>"; };
@@ -164,8 +164,8 @@
 		8856941F1ADDBBDE002127C1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8856941E1ADDBBDE002127C1 /* Lock8.app */,
-				885694371ADDBBDE002127C1 /* Lock8Tests.xctest */,
+				8856941E1ADDBBDE002127C1 /* Loc8.app */,
+				885694371ADDBBDE002127C1 /* Loc8Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -306,9 +306,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8856941D1ADDBBDE002127C1 /* Lock8 */ = {
+		8856941D1ADDBBDE002127C1 /* Loc8 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 885694411ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Lock8" */;
+			buildConfigurationList = 885694411ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Loc8" */;
 			buildPhases = (
 				8856941A1ADDBBDE002127C1 /* Sources */,
 				8856941B1ADDBBDE002127C1 /* Frameworks */,
@@ -318,14 +318,14 @@
 			);
 			dependencies = (
 			);
-			name = Lock8;
+			name = Loc8;
 			productName = Lock8;
-			productReference = 8856941E1ADDBBDE002127C1 /* Lock8.app */;
+			productReference = 8856941E1ADDBBDE002127C1 /* Loc8.app */;
 			productType = "com.apple.product-type.application";
 		};
-		885694361ADDBBDE002127C1 /* Lock8Tests */ = {
+		885694361ADDBBDE002127C1 /* Loc8Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 885694441ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Lock8Tests" */;
+			buildConfigurationList = 885694441ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Loc8Tests" */;
 			buildPhases = (
 				885694331ADDBBDE002127C1 /* Sources */,
 				885694341ADDBBDE002127C1 /* Frameworks */,
@@ -336,9 +336,9 @@
 			dependencies = (
 				885694391ADDBBDE002127C1 /* PBXTargetDependency */,
 			);
-			name = Lock8Tests;
+			name = Loc8Tests;
 			productName = Lock8Tests;
-			productReference = 885694371ADDBBDE002127C1 /* Lock8Tests.xctest */;
+			productReference = 885694371ADDBBDE002127C1 /* Loc8Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -364,7 +364,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 885694191ADDBBDE002127C1 /* Build configuration list for PBXProject "Lock8" */;
+			buildConfigurationList = 885694191ADDBBDE002127C1 /* Build configuration list for PBXProject "Loc8" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -378,8 +378,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8856941D1ADDBBDE002127C1 /* Lock8 */,
-				885694361ADDBBDE002127C1 /* Lock8Tests */,
+				8856941D1ADDBBDE002127C1 /* Loc8 */,
+				885694361ADDBBDE002127C1 /* Loc8Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -444,7 +444,7 @@
 /* Begin PBXTargetDependency section */
 		885694391ADDBBDE002127C1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8856941D1ADDBBDE002127C1 /* Lock8 */;
+			target = 8856941D1ADDBBDE002127C1 /* Loc8 */;
 			targetProxy = 885694381ADDBBDE002127C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -557,7 +557,7 @@
 				INFOPLIST_FILE = Lock8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Loc8;
 			};
 			name = Debug;
 		};
@@ -573,7 +573,7 @@
 				INFOPLIST_FILE = Lock8/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Loc8;
 			};
 			name = Release;
 		};
@@ -591,7 +591,7 @@
 				);
 				INFOPLIST_FILE = Lock8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Loc8Tests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lock8.app/Lock8";
 			};
 			name = Debug;
@@ -606,7 +606,7 @@
 				);
 				INFOPLIST_FILE = Lock8Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Loc8Tests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lock8.app/Lock8";
 			};
 			name = Release;
@@ -614,7 +614,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		885694191ADDBBDE002127C1 /* Build configuration list for PBXProject "Lock8" */ = {
+		885694191ADDBBDE002127C1 /* Build configuration list for PBXProject "Loc8" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8856943F1ADDBBDE002127C1 /* Debug */,
@@ -623,7 +623,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		885694411ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Lock8" */ = {
+		885694411ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Loc8" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				885694421ADDBBDE002127C1 /* Debug */,
@@ -632,7 +632,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		885694441ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Lock8Tests" */ = {
+		885694441ADDBBDE002127C1 /* Build configuration list for PBXNativeTarget "Loc8Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				885694451ADDBBDE002127C1 /* Debug */,
