@@ -10,6 +10,8 @@
 #import "TableCellResumen.h"
 #import "Login.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NuevaConfiguracion.h"
+#import "ComoFunciona.h"
 
 extern NSString* dispositivo;
 extern NSString* GlobalString;
@@ -42,6 +44,8 @@ extern NSString* vista_activa;
 extern CGRect rect_original_login;
 extern CGRect rect_original_unidades;
 extern UIView* sub_contenedor_incidencia;
+
+extern NetworkStatus returnValue;
 
 @interface Unidades (){
     BOOL ShowMenu;
@@ -88,6 +92,119 @@ extern UIView* sub_contenedor_incidencia;
 @implementation Unidades
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
+    if (![contadorTimer isValid]) {
+        contadorTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(actualizarxtimer:) userInfo:nil repeats:YES];
+    }
+    // check for internet connection
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    [internetReachable startNotifier];
+    
+    // check if a pathway to a random host exists
+    hostReachable = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    [hostReachable startNotifier];
+    
+    // now patiently wait for the notification
+    
+    NSUInteger iIndex_grupo=-1;
+    
+    ArrayNombreFlotas = [[NSMutableArray alloc] init];
+    ArregloFLotas = [[NSMutableArray alloc] init];
+    ArrayNombreFlotasSearch = [[NSMutableArray alloc] init];
+    ArregloFLotasSearch = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [MArrayID count]; i++) {
+        
+        NSMutableArray* arreglo_unidad = [[NSMutableArray alloc]init];
+        [arreglo_unidad addObject:[[MArrayFlota objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayEco objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayID objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayIP objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayLatitud objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayLongitud objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayAngulo objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayVelocidad objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayFecha objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayEvento objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayEstatus objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayIcono objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayUbicacion objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayMotor objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayTelefono objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayMensajes objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        [arreglo_unidad addObject:[[MArrayIcono_Mapa objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        
+        NSString* stringenIndex = [[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        iIndex_grupo = [ArrayNombreFlotas indexOfObject:stringenIndex];
+        //si el grupo no exsite lo creo
+        if (iIndex_grupo == NSNotFound) {
+            [ArrayNombreFlotas addObject:[[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            [ArrayNombreFlotasSearch addObject:[[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            iIndex_grupo=[ArregloFLotas count]-1;
+        }
+        [ArregloFLotas addObject:arreglo_unidad];
+        [ArregloFLotasSearch addObject:arreglo_unidad];
+        
+    }
+    
+    [tbl_flotas reloadData];
+    
+    
+    
+}
+
+-(void) checkNetworkStatus:(NSNotification *)notice
+{
+    // called after network status changes
+    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
+    switch (internetStatus)
+    {
+        case NotReachable:
+        {
+            NSLog(@"The internet is down.");
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"The internet is working via WIFI.");
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            NSLog(@"The internet is working via WWAN.");
+            break;
+        }
+    }
+    
+    NetworkStatus hostStatus = [hostReachable currentReachabilityStatus];
+    switch (hostStatus)
+    {
+        case NotReachable:
+        {
+            NSLog(@"A gateway to the host server is down.");
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"A gateway to the host server is working via WIFI.");
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            NSLog(@"A gateway to the host server is working via WWAN.");
+            break;
+        }
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+    [contadorTimer invalidate];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -99,23 +216,34 @@ extern UIView* sub_contenedor_incidencia;
                                                  name:UIKeyboardWillHideNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChangedUnidades:) name:kReachabilityChangedNotification object:nil];*/
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Tiempo.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contents = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    if (contents == nil || [contents isEqualToString:@""]) {
+        NSDate *currentTime = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+        NSString *resultString = [dateFormatter stringFromDate: currentTime];
+        resultString = [resultString stringByAppendingString:@",300"];
+        [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+    }
     
+    else{
+        NSArray* tiempo = [contents componentsSeparatedByString:@","];
+        NSDate *currentTime = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+        NSString *resultString = [dateFormatter stringFromDate: currentTime];
+        resultString = [NSString stringWithFormat:@"%@,%@", resultString, [tiempo objectAtIndex:1]];
+        [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+    }
     
     remoteHostName = @"www.apple.com";
     
     vista_activa = @"Unidades";
-    
-    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
-    [self.hostReachability startNotifier];
-    [self updateInterfaceWithReachability:self.hostReachability];
-    
-    self.internetReachability = [Reachability reachabilityForInternetConnection];
-    [self.internetReachability startNotifier];
-    [self updateInterfaceWithReachability:self.internetReachability];
-    
-    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
-    [self.wifiReachability startNotifier];
-    [self updateInterfaceWithReachability:self.wifiReachability];
     
     ShowMenu = NO;
     Show_Table_Unidades = NO;
@@ -212,14 +340,10 @@ extern UIView* sub_contenedor_incidencia;
     tbl_menu.backgroundColor = [UIColor whiteColor];
     tbl_menu.separatorColor = [UIColor clearColor];
     [contenedor_menu addSubview:tbl_menu];
-    tbl_menu.delegate = self;
-    tbl_menu.dataSource = self;
     
     
-    ArrayNombreFlotas = [[NSMutableArray alloc] init];
-    ArregloFLotas = [[NSMutableArray alloc] init];
-    ArrayNombreFlotasSearch = [[NSMutableArray alloc] init];
-    ArregloFLotasSearch = [[NSMutableArray alloc] init];
+    
+    
     
     searchBar_flotas = [[UISearchBar alloc] initWithFrame:CGRectMake(0, btn_menu.frame.size.height + 20, self.view.frame.size.width, 40)];
     searchBar_flotas.tintColor = [UIColor colorWithRed:133.0/255.0 green:22.0/255.0 blue:24.0/255.0 alpha:1];
@@ -229,8 +353,7 @@ extern UIView* sub_contenedor_incidencia;
     tbl_flotas = [[UITableView alloc] initWithFrame:CGRectMake(0, btn_menu.frame.size.height + 20 + 40, self.view.frame.size.width, self.view.frame.size.height - btn_menu.frame.size.height - 20) style:UITableViewStylePlain];
     tbl_flotas.backgroundColor = [UIColor whiteColor];
     tbl_flotas.separatorColor = [UIColor whiteColor];
-    tbl_flotas.dataSource = self;
-    tbl_flotas.delegate = self;
+    
     [contenedor_vista addSubview:tbl_flotas];
     
     contenedor_tbl_unidades = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, btn_menu.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height - btn_menu.frame.size.height - 20)];
@@ -245,8 +368,7 @@ extern UIView* sub_contenedor_incidencia;
     tbl_unidades = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, contenedor_tbl_unidades.frame.size.width, contenedor_tbl_unidades.frame.size.height - 40) style:UITableViewStylePlain];
     tbl_unidades.backgroundColor = [UIColor whiteColor];
     tbl_unidades.separatorColor = [UIColor whiteColor];
-    tbl_unidades.dataSource = self;
-    tbl_unidades.delegate = self;
+    
     [contenedor_tbl_unidades addSubview:tbl_unidades];
     
     
@@ -408,14 +530,13 @@ extern UIView* sub_contenedor_incidencia;
     tbl_incidencias = [[UITableView alloc] initWithFrame:txt_descripcion_incidencia.frame];
     tbl_incidencias.backgroundColor= [UIColor whiteColor];
     tbl_incidencias.separatorColor = [UIColor whiteColor];
-    tbl_incidencias.dataSource = self;
-    tbl_incidencias.delegate = self;
+    
     tbl_incidencias.hidden = YES;
     [sub_contenedor_incidencia addSubview:tbl_incidencias];
     
     
     UIButton* btn_enviar_incidencia = [[UIButton alloc] initWithFrame:CGRectMake(0, 270, sub_contenedor_incidencia.frame.size.width, 30)];
-    [btn_enviar_incidencia setTitle:@"Entrar" forState:UIControlStateNormal];
+    [btn_enviar_incidencia setTitle:@"Enviar" forState:UIControlStateNormal];
     [btn_enviar_incidencia addTarget:self action:@selector(EnviarIncidencia:) forControlEvents:UIControlEventTouchUpInside];
     [btn_enviar_incidencia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
     btn_enviar_incidencia.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:34.0/255.0 blue:36.0/255.0 alpha:1];
@@ -427,41 +548,7 @@ extern UIView* sub_contenedor_incidencia;
     [contenedor_vista addSubview:contenedor_invisible];
     
     
-    NSUInteger iIndex_grupo=-1;
     
-    for (int i = 0; i < [MArrayID count]; i++) {
-        
-        NSMutableArray* arreglo_unidad = [[NSMutableArray alloc]init];
-        [arreglo_unidad addObject:[[MArrayFlota objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayEco objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayID objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayIP objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayLatitud objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayLongitud objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayAngulo objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayVelocidad objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayFecha objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayEvento objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayEstatus objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayIcono objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayUbicacion objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayMotor objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayTelefono objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayMensajes objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        [arreglo_unidad addObject:[[MArrayIcono_Mapa objectAtIndex:i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        
-        NSString* stringenIndex = [[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        iIndex_grupo = [ArrayNombreFlotas indexOfObject:stringenIndex];
-        //si el grupo no exsite lo creo
-        if (iIndex_grupo == NSNotFound) {
-            [ArrayNombreFlotas addObject:[[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-            [ArrayNombreFlotasSearch addObject:[[MArrayFlota objectAtIndex:i]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-            iIndex_grupo=[ArregloFLotas count]-1;
-        }
-        [ArregloFLotas addObject:arreglo_unidad];
-        [ArregloFLotasSearch addObject:arreglo_unidad];
-        
-    }
     
     contenedor_animacion = [[UIView alloc]initWithFrame:self.view.frame];
     contenedor_animacion.backgroundColor = [UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:0.5];
@@ -503,66 +590,121 @@ extern UIView* sub_contenedor_incidencia;
     pk_incidencia.dataSource = self;
     pk_incidencia.delegate = self;
     
+    
+    tbl_menu.delegate = self;
+    tbl_menu.dataSource = self;
+    
+    tbl_flotas.dataSource = self;
+    tbl_flotas.delegate = self;
+    
+    
+    tbl_unidades.dataSource = self;
+    tbl_unidades.delegate = self;
+    
+    
+    tbl_incidencias.dataSource = self;
+    tbl_incidencias.delegate = self;
+    
+    ArrayNombreFlotasSearch = [[NSMutableArray alloc] init];
+    [ArrayNombreFlotas addObject:@"Cargando..."];
+    ArregloFLotasSearch = [[NSMutableArray alloc] init];
+    [ArregloFLotasSearch addObject:@"Cargando..."];
+    
 }
 
-- (void) reachabilityChangedUnidades:(NSNotification *)note
-{
-    Reachability* curReach = [note object];
-    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
-    [self updateInterfaceWithReachability:curReach];
+-(void)actualizarxtimer:(id)sender{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Tiempo.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contents = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    if (contents == nil || [contents isEqualToString:@""]) {
+        NSDate *currentTime = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+        NSString *resultString = [dateFormatter stringFromDate: currentTime];
+        resultString = [resultString stringByAppendingString:@",300"];
+        [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+    }
+    
+    else{
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        // this is imporant - we set our input date format to match our input string
+        // if format doesn't match you'll get nil from your string, so be careful
+        [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+        NSDate *dateArchivo = [[NSDate alloc] init];
+        
+        NSArray* tiempo = [contents componentsSeparatedByString:@","];
+        
+        dateArchivo = [dateFormatter dateFromString:[tiempo objectAtIndex:0]];
+        
+        NSDate *currentTime = [NSDate date];
+        NSString *resultString = [dateFormatter stringFromDate: currentTime];
+        currentTime = [dateFormatter dateFromString:resultString];
+        
+        NSTimeInterval diff = [currentTime timeIntervalSinceDate:dateArchivo];
+        
+        
+        
+        if (diff>[[tiempo objectAtIndex:1] intValue]) {
+            resultString = [resultString stringByAppendingString:@","];
+            resultString = [resultString stringByAppendingString:[tiempo objectAtIndex:1]];
+            [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+            [self actualizar:self];
+        }
+        
+    }
 }
 
-- (void)updateInterfaceWithReachability:(Reachability *)reachability
-{
-    if (reachability == self.hostReachability)
-    {
-        //  NetworkStatus netStatus = [reachability currentReachabilityStatus];
-        BOOL connectionRequired = [reachability connectionRequired];
-        if (connectionRequired)
-            NSLog(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established., Reachability text if a connection is required");
-        else
-            NSLog(@"Cellular data network is active.\nInternet traffic will be routed through it. Reachability text if a connection is not required");
+-(IBAction)actualizar:(id)sender{
+    
+    //  NSInteger r = arc4random()%5;
+    
+    contenedor_animacion.hidden = NO;
+    contenedor_cancelar.hidden = YES;
+    
+    if (returnValue!=NotReachable) {
+        
+        MArrayFlota = [[NSMutableArray alloc]init];
+        MArrayEco = [[NSMutableArray alloc]init];
+        MArrayID = [[NSMutableArray alloc]init];
+        MArrayIP = [[NSMutableArray alloc]init];
+        MArrayLatitud = [[NSMutableArray alloc]init];
+        MArrayLongitud = [[NSMutableArray alloc]init];
+        MArrayAngulo = [[NSMutableArray alloc]init];
+        MArrayVelocidad = [[NSMutableArray alloc]init];
+        MArrayFecha = [[NSMutableArray alloc]init];
+        MArrayEvento = [[NSMutableArray alloc]init];
+        MArrayEstatus = [[NSMutableArray alloc]init];
+        MArrayIcono = [[NSMutableArray alloc]init];
+        MArrayUbicacion = [[NSMutableArray alloc]init];
+        MArrayMotor = [[NSMutableArray alloc]init];
+        MArrayTelefono = [[NSMutableArray alloc]init];
+        MArrayMensajes = [[NSMutableArray alloc]init];
+        MArrayIcono_Mapa = [[NSMutableArray alloc]init];
+        
+        
+        NSMutableArray *tags = [[NSMutableArray alloc]initWithObjects:@"usName", @"usPassword", @"usVelocidad", @"usMinSinReporte",nil];
+        NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:GlobalUsu, Globalpass, limite_velocidad, tiempo_unidad_ociosa, nil];
+        
+        metodo_ = @"GetPositions";
+        
+        [soapTool callSoapServiceWithParameters__functionName:@"GetPositions" tags:tags vars:vars wsdlURL:url_web_service];
+    }
+    else{
+        contenedor_animacion.hidden = NO;
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Loc8"
+                                                          message:@"Sin conexión con el servidor"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
     }
     
-    if (reachability == self.internetReachability)
-        [self ActualConnection:reachability];
-    if (reachability == self.wifiReachability)
-        [self ActualConnection:reachability];
 }
 
--(void)ActualConnection:(Reachability*)reachability{
-    NetworkStatus netStatus = [reachability currentReachabilityStatus];
-    BOOL connectionRequired = [reachability connectionRequired];
-    
-    
-    switch (netStatus)
-    {
-        case NotReachable:{
-            reachable = NO;
-            connectionRequired = YES;
-            break;
-        }
-        case ReachableViaWWAN:{
-            reachable = YES;
-            NSLog(@"Reachable WWAN");
-            break;
-        }
-        case ReachableViaWiFi:{
-            reachable = YES;
-            NSLog(@"Reachable WiFi");
-            break;
-        }
-    }
-    
-    if (connectionRequired)
-    {
-        NSLog(@"Connection Required");
-        reachable = NO;
-        //   NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
-        //     statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
-    }
-    
-}
 
 - (void)keyboardWillHideUnidades:(NSNotification *)notif {
     height_keyboard = [[notif.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey ] CGRectValue].size.height;
@@ -641,12 +783,25 @@ extern UIView* sub_contenedor_incidencia;
 -(void)parserDidStartDocument:(NSXMLParser *)parser {
     NSLog(@"The XML document is now being parsed.");
     
-    if ([metodo_ isEqualToString:@"SendCommand"]){
-        if (cancelar_actualizacion==NO) {
-            datos_unidad = [[NSMutableArray alloc] init];
-        }
+    if ([metodo_ isEqualToString:@"GetPositions"]) {
+        MArrayFlota = [[NSMutableArray alloc]init];
+        MArrayEco = [[NSMutableArray alloc]init];
+        MArrayID = [[NSMutableArray alloc]init];
+        MArrayIP = [[NSMutableArray alloc]init];
+        MArrayLatitud = [[NSMutableArray alloc]init];
+        MArrayLongitud = [[NSMutableArray alloc]init];
+        MArrayAngulo = [[NSMutableArray alloc]init];
+        MArrayVelocidad = [[NSMutableArray alloc]init];
+        MArrayFecha = [[NSMutableArray alloc]init];
+        MArrayEvento = [[NSMutableArray alloc]init];
+        MArrayEstatus = [[NSMutableArray alloc]init];
+        MArrayIcono = [[NSMutableArray alloc]init];
+        MArrayUbicacion = [[NSMutableArray alloc]init];
+        MArrayMotor = [[NSMutableArray alloc]init];
+        MArrayTelefono = [[NSMutableArray alloc]init];
+        MArrayMensajes = [[NSMutableArray alloc]init];
+        MArrayIcono_Mapa = [[NSMutableArray alloc]init];
     }
-    
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
@@ -681,7 +836,44 @@ extern UIView* sub_contenedor_incidencia;
         StringCode = [currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if ([elementName isEqualToString:@"msg"])
         StringMsg = [currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
+    if ([metodo_ isEqualToString:@"GetPositions"]) {
+       /* if ([elementName isEqualToString:@"ocultar"])
+            ocultar = [currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];*/
+        if ([elementName isEqualToString:@"Flota"])
+            [MArrayFlota addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Eco"])
+            [MArrayEco addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"ID"])
+            [MArrayID addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"IP"])
+            [MArrayIP addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Latitud"])
+            [MArrayLatitud addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Longitud"])
+            [MArrayLongitud addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Angulo"])
+            [MArrayAngulo addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Velocidad"])
+            [MArrayVelocidad addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Fecha"])
+            [MArrayFecha addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Evento"])
+            [MArrayEvento addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Estatus"])
+            [MArrayEstatus addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Icono"])
+            [MArrayIcono addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Ubicacion"])
+            [MArrayUbicacion addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Motor"])
+            [MArrayMotor addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Telefono"])
+            [MArrayTelefono addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Mensajes"])
+            [MArrayMensajes addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if ([elementName isEqualToString:@"Icono_mapa"])
+            [MArrayIcono_Mapa addObject:[currentElementString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    }
      if ([metodo_ isEqualToString:@"DameIncidencias"]){
         if ([elementName isEqualToString:@"descripcion"]) {
             [descripcion_incidencias addObject:currentElementString];
@@ -736,7 +928,41 @@ extern UIView* sub_contenedor_incidencia;
 -(void)FillArray{
     contenedor_animacion.hidden = YES;
     contenedor_cancelar.hidden = YES;
-    if([metodo_ isEqualToString:@"DameIncidencias"]){
+    if ([metodo_ isEqualToString:@"GetPositions"]) {
+        NSString* mensajeAlerta = StringMsg;
+        
+        NSInteger code = [StringCode intValue];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Lock8"
+                                                          message:mensajeAlerta
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        if (code <0) {
+            contenedor_animacion.hidden = YES;
+            [message show];
+        }
+        else if (code == 0){
+            mensajeAlerta = @"El usuario no tiene unidades asignadas";
+            [message show];
+        }
+        else{
+            StringMsg = [StringMsg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            if ([StringMsg isEqualToString:@"ACTUALIZAR"]) {
+                UIAlertView *messages = [[UIAlertView alloc] initWithTitle:@"Tracking"
+                                                                   message:@"Existe una nueva versión disponible. ¿Desea actualizar en este momento?"
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Aceptar"
+                                                         otherButtonTitles:@"Cancelar",nil];
+                [messages setTag:1];
+                [messages show];
+            }
+            else{
+                [self EscribirArchivos];
+            }
+        }
+    }
+    else if([metodo_ isEqualToString:@"DameIncidencias"]){
         if ([descripcion_incidencias count]>0) {
             [tbl_incidencias reloadData];
             contenedor_animacion.hidden = YES;
@@ -762,6 +988,73 @@ extern UIView* sub_contenedor_incidencia;
     else if ([metodo_ isEqualToString:@"SendCommand"]){
         [self CargarMapa];
     }
+    
+}
+
+-(void)EscribirArchivos{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+    NSString *resultString = [dateFormatter stringFromDate: [NSDate date]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Tiempo.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contents = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    resultString = [dateFormatter stringFromDate: [NSDate date]];
+    if (contents == nil || [contents isEqualToString:@""]) {
+        
+        resultString = [resultString stringByAppendingString:@",300"];
+    }
+    else{
+        NSArray* arraytiempo = [contents componentsSeparatedByString:@","];
+        resultString = [resultString stringByAppendingString:@","];
+        resultString = [resultString stringByAppendingString:[arraytiempo objectAtIndex:1]];
+        
+    }
+    
+    
+    [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+    
+    fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Mapas.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contentsMapas = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    if (contentsMapas == nil || [contentsMapas isEqualToString:@""]) {
+        mapas = @"Detalle";
+    }
+    else{
+        mapas = contentsMapas;
+    }
+    
+    fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Busqueda.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contentsBusqueda = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    if (contentsBusqueda == nil || [contentsBusqueda isEqualToString:@""])
+        busqueda = @"Ecónomico, Dirección";
+    else
+        busqueda = contentsBusqueda;
+    
+    fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_tiempo_unidad_ociosa.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    
+    NSString *contentstiempo_unidad_ociosa = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    if (contentstiempo_unidad_ociosa == nil || [contentstiempo_unidad_ociosa isEqualToString:@""]) {
+        
+        tiempo_unidad_ociosa = @"60";
+        
+    }
+    else{
+        tiempo_unidad_ociosa = contentstiempo_unidad_ociosa;
+    }
+    
+    NSString* view_name = @"Unidades";
+    if (![dispositivo isEqualToString:@""]) {
+        view_name = [NSString stringWithFormat:@"%@_%@", view_name,dispositivo];
+    }
+    
+    Unidades *view = [[Unidades alloc] initWithNibName:view_name bundle:nil];
+    view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:view animated:YES completion:nil];
     
 }
 
@@ -801,7 +1094,7 @@ extern UIView* sub_contenedor_incidencia;
         
     }
     else{
-        if (reachable) {
+        if (returnValue != NotReachable) {
             metodo_ = @"Incidencia";
             contenedor_animacion.hidden = NO;
             contenedor_cancelar.hidden = YES;
@@ -920,7 +1213,7 @@ extern UIView* sub_contenedor_incidencia;
         [UIView commitAnimations];
     }else{
         
-        if (reachable) {
+         if (returnValue != NotReachable) {
             contenedor_animacion.hidden = NO;
             contenedor_cancelar.hidden = YES;
             descripcion_incidencias = [[NSMutableArray alloc]init];
@@ -974,7 +1267,7 @@ extern UIView* sub_contenedor_incidencia;
 }
 
 -(IBAction)ActualizarPosicion:(id)sender{
-    if (reachable) {
+     if (returnValue != NotReachable) {
         contenedor_animacion.hidden = NO;
         cancelar_actualizacion = NO;
         contenedor_cancelar.hidden = NO;
@@ -1007,6 +1300,10 @@ extern UIView* sub_contenedor_incidencia;
     UIActivityViewController* activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:@[capturedScreen]
                                       applicationActivities:nil];
+    
+    
+    activityViewController.popoverPresentationController.sourceView = self.view;
+    
     [self presentViewController:activityViewController animated:YES completion:^{}];
 }
 
@@ -1073,7 +1370,7 @@ extern UIView* sub_contenedor_incidencia;
             separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, cell.frame.size.height - 2, self.view.frame.size.width - 10, 1)];
         
         separatorLineView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1]; // set color as you want.
-        [cell.contentView addSubview:separatorLineView];
+    //    [cell.contentView addSubview:separatorLineView];
     }
     
     
@@ -1217,10 +1514,47 @@ extern UIView* sub_contenedor_incidencia;
                 view_name = [NSString stringWithFormat:@"%@_%@", view_name,dispositivo];
             }
             
+            [self removeFromParentViewController];
+            
+            [self ShowMenu:self];
+            
+            ArrayNombreFlotasSearch = [[NSMutableArray alloc] init];
+            [ArrayNombreFlotas addObject:@"Cargando..."];
+            ArregloFLotasSearch = [[NSMutableArray alloc] init];
+            [ArregloFLotasSearch addObject:@"Cargando..."];
+            [tbl_flotas reloadData];
+            
+            
             Login *view = [[Login alloc] initWithNibName:view_name bundle:nil];
             view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
             [self presentViewController:view animated:YES completion:nil];
+            
         }
+        if (indexPath.row == 2) {
+            NSString* view_name = @"ComoFunciona";
+            if (![dispositivo isEqualToString:@""]) {
+                view_name = [NSString stringWithFormat:@"%@_%@", view_name,dispositivo];
+            }
+            
+            ComoFunciona *view = [[ComoFunciona alloc] initWithNibName:view_name bundle:nil];
+            view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self presentViewController:view animated:YES completion:nil];
+        }
+        else if (indexPath.row == 1) {
+            NSString* view_name = @"NuevaConfiguracion";
+            if (![dispositivo isEqualToString:@""]) {
+                view_name = [NSString stringWithFormat:@"%@_%@", view_name,dispositivo];
+            }
+            
+            NuevaConfiguracion *view = [[NuevaConfiguracion alloc] initWithNibName:view_name bundle:nil];
+            view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self presentViewController:view animated:YES completion:nil];
+        }
+        
+        else if (indexPath.row == 0) {
+            [self ShowMenu:self];
+        }
+        
     }
     else if (tableView == tbl_flotas){
         ArrayUnidades = [[NSMutableArray alloc] init];
@@ -1306,7 +1640,7 @@ extern UIView* sub_contenedor_incidencia;
     
     GMSCameraPosition *sydney = [GMSCameraPosition cameraWithLatitude:[[datos_unidad objectAtIndex:4] doubleValue]
                                                             longitude:[[datos_unidad objectAtIndex:5] doubleValue]
-                                                                 zoom:5];
+                                                                 zoom:15];
     [mapView_ setCamera:sydney];
     
     [panoView_ moveNearCoordinate:CLLocationCoordinate2DMake([[datos_unidad objectAtIndex:4] doubleValue], [[datos_unidad objectAtIndex:5] doubleValue])];

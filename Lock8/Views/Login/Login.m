@@ -17,6 +17,7 @@ extern NSString* url_web_service;
 extern NSString* GlobalString;
 extern NSString* GlobalUsu;
 extern NSString*Globalpass;
+extern NetworkStatus returnValue;
 
 NSMutableArray*  MArrayFlota;
 NSMutableArray*  MArrayEco;
@@ -84,6 +85,66 @@ extern UIView* sub_contenedor_incidencia;
     
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    // check for internet connection
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    [internetReachable startNotifier];
+    
+    // check if a pathway to a random host exists
+    hostReachable = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    [hostReachable startNotifier];
+    
+    // now patiently wait for the notification
+}
+
+-(void) checkNetworkStatus:(NSNotification *)notice
+{
+    // called after network status changes
+    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
+    switch (internetStatus)
+    {
+        case NotReachable:
+        {
+            NSLog(@"The internet is down.");
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"The internet is working via WIFI.");
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            NSLog(@"The internet is working via WWAN.");
+            break;
+        }
+    }
+    
+    NetworkStatus hostStatus = [hostReachable currentReachabilityStatus];
+    switch (hostStatus)
+    {
+        case NotReachable:
+        {
+            NSLog(@"A gateway to the host server is down.");
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"A gateway to the host server is working via WIFI.");
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            NSLog(@"A gateway to the host server is working via WWAN.");
+            break;
+        }
+    }
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -94,25 +155,8 @@ extern UIView* sub_contenedor_incidencia;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
 
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
     remoteHostName = @"www.apple.com";
-    
     autocompletar_usuarios = [[NSMutableArray alloc]init];
-    
-    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
-    [self.hostReachability startNotifier];
-    [self updateInterfaceWithReachability:self.hostReachability];
-    
-    self.internetReachability = [Reachability reachabilityForInternetConnection];
-    [self.internetReachability startNotifier];
-    [self updateInterfaceWithReachability:self.internetReachability];
-    
-    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
-    [self.wifiReachability startNotifier];
-    [self updateInterfaceWithReachability:self.wifiReachability];
-    
     
     contenedor_general = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:contenedor_general];
@@ -128,7 +172,12 @@ extern UIView* sub_contenedor_incidencia;
     img_logo.image = [UIImage imageNamed:@"logo"];
     [contenedor_general addSubview:img_logo];
     
-    contenedor_txt = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - (self.view.frame.size.height / 2.5) , self.view.frame.size.width, self.view.frame.size.height / 2.5)];
+    CGFloat dividendo = 2.5;
+    if ([dispositivo isEqualToString:@"iPad"]) {
+        dividendo = 4;
+    }
+    
+    contenedor_txt = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - (self.view.frame.size.height / dividendo) , self.view.frame.size.width, self.view.frame.size.height / dividendo)];
     contenedor_txt.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.8];
     [contenedor_general addSubview:contenedor_txt];
     
@@ -155,13 +204,31 @@ extern UIView* sub_contenedor_incidencia;
     txt_usuario.clearButtonMode = UITextFieldViewModeWhileEditing;
     txt_pass.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    UILabel* recordar_ = [[UILabel alloc] initWithFrame:CGRectMake(contenedor_txt.frame.size.width - 10 - (contenedor_txt.frame.size.width * 0.55), contenedor_txt.frame.size.height *  0.54, contenedor_txt.frame.size.width * 0.55, contenedor_txt.frame.size.height *  0.06)];
+    CGFloat font_size = 12;
+    if ([dispositivo isEqualToString:@"ipad"]) {
+        font_size = 22;
+    }
+    
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:font_size];
+    CGSize constraint = CGSizeMake(NSUIntegerMax,NSUIntegerMax);
+    
+    NSDictionary *attributes = @{NSFontAttributeName: font};
+    
+    CGRect rect = [@"Recordar contraseña" boundingRectWithSize:constraint
+                                       options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                    attributes:attributes
+                                       context:nil];
+    
+    
+    
+    UILabel* recordar_ = [[UILabel alloc] initWithFrame:CGRectMake(contenedor_txt.frame.size.width - 10 - rect.size.width , contenedor_txt.frame.size.height *  0.54, rect.size.width, contenedor_txt.frame.size.height *  0.06)];
     recordar_.text = @"Recordar contraseña";
     recordar_.textColor = [UIColor whiteColor];
     recordar_.textAlignment = NSTextAlignmentRight;
+    recordar_.font = font;
     [contenedor_txt addSubview:recordar_];
     
-    check_button = [[UIButton alloc] initWithFrame:CGRectMake(contenedor_txt.frame.size.width - 5 - (contenedor_txt.frame.size.width * 0.55) - (contenedor_txt.frame.size.height *  0.10), contenedor_txt.frame.size.height *  0.54, contenedor_txt.frame.size.height *  0.065, contenedor_txt.frame.size.height *  0.065)];
+    check_button = [[UIButton alloc] initWithFrame:CGRectMake(recordar_.frame.origin.x - 10 - (contenedor_txt.frame.size.height *  0.065) , contenedor_txt.frame.size.height *  0.54, contenedor_txt.frame.size.height *  0.065, contenedor_txt.frame.size.height *  0.065)];
     [check_button addTarget:self action:@selector(check:) forControlEvents:UIControlEventTouchUpInside];
     [check_button setImage:[UIImage imageNamed:@"checkbox-unchecked-gray-md"] forState:UIControlStateNormal];
     [contenedor_txt addSubview:check_button];
@@ -186,6 +253,7 @@ extern UIView* sub_contenedor_incidencia;
     [btn_olvide setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
     btn_olvide.backgroundColor = [UIColor clearColor];
     [contenedor_txt addSubview:btn_olvide];
+    btn_olvide.hidden = YES;
     
     
     img_1 = [NSString stringWithFormat:@"img1_%@", dispositivo];
@@ -223,7 +291,7 @@ extern UIView* sub_contenedor_incidencia;
     
     [contenedor_animacion addSubview:actividad_global];
     
-    contadorTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(actualizarimagen:) userInfo:nil repeats:YES];
+    contadorTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(actualizarimagen:) userInfo:nil repeats:YES];
     
     NSString* datos_usuario = [self ReadFileRecordar];
     
@@ -254,75 +322,14 @@ extern UIView* sub_contenedor_incidencia;
     soapTool = [[SYSoapTool alloc]init];
     soapTool.delegate = self;
     
+    NSURLCache *sharedCache = [NSURLCache sharedURLCache];
+    [sharedCache removeAllCachedResponses];
 }
-
-
-- (void) reachabilityChanged:(NSNotification *)note
-{
-    Reachability* curReach = [note object];
-    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
-    [self updateInterfaceWithReachability:curReach];
-}
-
-- (void)updateInterfaceWithReachability:(Reachability *)reachability
-{
-    if (reachability == self.hostReachability)
-    {
-      //  NetworkStatus netStatus = [reachability currentReachabilityStatus];
-        BOOL connectionRequired = [reachability connectionRequired];
-        if (connectionRequired)
-            NSLog(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established., Reachability text if a connection is required");
-        else
-           NSLog(@"Cellular data network is active.\nInternet traffic will be routed through it. Reachability text if a connection is not required");
-    }
-    
-    if (reachability == self.internetReachability)
-        [self ActualConnection:reachability];
-    if (reachability == self.wifiReachability)
-        [self ActualConnection:reachability];
-}
-
--(void)ActualConnection:(Reachability*)reachability{
-    NetworkStatus netStatus = [reachability currentReachabilityStatus];
-    BOOL connectionRequired = [reachability connectionRequired];
-
-    
-    switch (netStatus)
-    {
-        case NotReachable:{
-            reachable = NO;
-            connectionRequired = YES;
-            break;
-        }
-        case ReachableViaWWAN:{
-            reachable = YES;
-            NSLog(@"Reachable WWAN");
-            break;
-        }
-        case ReachableViaWiFi:{
-            reachable = YES;
-            NSLog(@"Reachable WiFi");
-            break;
-        }
-    }
-    
-    if (connectionRequired)
-    {
-        NSLog(@"Connection Required");
-        reachable = NO;
-     //   NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
-   //     statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
-    }
-    
-}
-
 
 -(IBAction)Login:(id)sender{
     NSString* error = @"";
- //   [txt_pass resignFirstResponder];
- //   [txt_usuario resignFirstResponder];
-    if (!reachable)
-        error = @"No existe conexión a internet";
+    if (returnValue == NotReachable)
+            error = @"No existe conexión a internet";
     if ([[txt_pass.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
         error= @"Debe insertar una contraseña valida";
         [txt_pass becomeFirstResponder];
@@ -384,6 +391,13 @@ extern UIView* sub_contenedor_incidencia;
         NSMutableArray *vars = [[NSMutableArray alloc]initWithObjects:usuario_completo, txt_pass.text, limite_velocidad, tiempo_unidad_ociosa, nil];
         metodo_ = @"GetPositions";
         [soapTool callSoapServiceWithParameters__functionName:@"GetPositions" tags:tags vars:vars wsdlURL:url_web_service];
+        
+        /*
+        UIDeviceBatteryState batteryState = [UIDevice currentDevice].batteryState;
+        if (batteryState == UIDeviceBatteryStateCharging || batteryState == UIDeviceBatteryStateFull) {
+            // Your code that writes files to a certain location here
+        }*/
+        
 
     }
     else{
@@ -768,7 +782,33 @@ extern UIView* sub_contenedor_incidencia;
 }
 
 -(void)EscribirArchivos{
-    NSString* fileName = [NSString stringWithFormat:@"%@/ConfigFile.txt", documentsDirectory];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss"];
+    NSString *resultString = [dateFormatter stringFromDate: [NSDate date]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fileName = [NSString stringWithFormat:@"%@%@", GlobalUsu, @"_Tiempo.txt"];
+    fileName = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    NSString *contents = [[NSString alloc] initWithContentsOfFile:fileName usedEncoding:nil error:nil];
+    resultString = [dateFormatter stringFromDate: [NSDate date]];
+    if (contents == nil || [contents isEqualToString:@""]) {
+        
+        resultString = [resultString stringByAppendingString:@",300"];
+    }
+    else{
+        NSArray* arraytiempo = [contents componentsSeparatedByString:@","];
+        resultString = [resultString stringByAppendingString:@","];
+        resultString = [resultString stringByAppendingString:[arraytiempo objectAtIndex:1]];
+        
+    }
+    
+    
+    [resultString writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+    
+    
+    
+    fileName = [NSString stringWithFormat:@"%@/ConfigFile.txt", documentsDirectory];
     NSString* DataMobileUser = @"";
     if (checked == YES) {
         DataMobileUser = [DataMobileUser stringByAppendingString:txt_usuario.text];

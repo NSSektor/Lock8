@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -222,55 +222,55 @@
                 <outlet property="lbl_eco" destination="hxa-qe-HyT" id="iSe-ko-c0v"/>
                 <outlet property="lbl_evento" destination="FIb-GR-UbC" id="UKQ-LF-ohr"/>
                 <outlet property="lbl_fecha" destination="r3q-CZ-y7e" id="HC9-ld-NKe"/>
-                <outlet property="lbl_menu" destination="YaE-qK-5ir" id="brX-Xb-jN8"/>
+                <outlet property="lbl_velocidad" destination="YaE-qK-5ir" id="Wan-LD-UFm"/>
             </connections>
             <point key="canvasLocation" x="726.5" y="359"/>
         </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="120" id="M9a-zb-0Yd" customClass="TableCellResumen">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="100" id="M9a-zb-0Yd" customClass="TableCellResumen">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9a-zb-0Yd" id="g94-K6-UbB">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="motor_off" translatesAutoresizingMaskIntoConstraints="NO" id="OYJ-fi-Dk4">
-                        <rect key="frame" x="10" y="20" width="31" height="30"/>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QsS-bl-ldK">
                         <rect key="frame" x="50" y="10" width="364" height="15"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xq6-hJ-Lhk">
-                        <rect key="frame" x="50" y="30" width="364" height="15"/>
+                        <rect key="frame" x="50" y="25" width="364" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLP-Mw-Vnh">
-                        <rect key="frame" x="50" y="50" width="182" height="15"/>
+                        <rect key="frame" x="50" y="40" width="182" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2c-NZ-uYS">
-                        <rect key="frame" x="232" y="50" width="182" height="15"/>
+                        <rect key="frame" x="50" y="55" width="182" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión Cerrar sesión Cerrar sesión Cerrar sesión" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAh-fg-brX">
-                        <rect key="frame" x="50" y="70" width="364" height="45"/>
+                        <rect key="frame" x="50" y="70" width="364" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="A_0_off" translatesAutoresizingMaskIntoConstraints="NO" id="N3w-pE-cM7">
-                        <rect key="frame" x="11" y="70" width="31" height="30"/>
+                        <rect key="frame" x="18" y="60" width="20" height="20"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-fl-L2a">
-                        <rect key="frame" x="0.0" y="118" width="414" height="2"/>
+                        <rect key="frame" x="0.0" y="98" width="414" height="2"/>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="motor_off" translatesAutoresizingMaskIntoConstraints="NO" id="OYJ-fi-Dk4">
+                        <rect key="frame" x="18" y="19" width="20" height="20"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
@@ -283,17 +283,17 @@
                 <outlet property="lbl_fecha" destination="Xq6-hJ-Lhk" id="bFB-VM-wW8"/>
                 <outlet property="lbl_velocidad" destination="d2c-NZ-uYS" id="RdM-5V-CNS"/>
             </connections>
-            <point key="canvasLocation" x="1167" y="354"/>
+            <point key="canvasLocation" x="1167" y="359"/>
         </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="120" id="jrm-kn-j0Z" customClass="TableCellResumen">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="120"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="100" id="jrm-kn-j0Z" customClass="TableCellResumen">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jrm-kn-j0Z" id="Nj7-tL-wcq">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="motor_off" translatesAutoresizingMaskIntoConstraints="NO" id="cf0-ai-yka">
-                        <rect key="frame" x="10" y="20" width="31" height="30"/>
+                        <rect key="frame" x="10" y="20" width="25" height="25"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLc-AH-lju">
                         <rect key="frame" x="50" y="10" width="718" height="15"/>
@@ -301,34 +301,34 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G50-9o-yZA">
-                        <rect key="frame" x="50" y="30" width="718" height="15"/>
+                        <rect key="frame" x="50" y="25" width="718" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcb-NG-x0z">
-                        <rect key="frame" x="50" y="50" width="359" height="15"/>
+                        <rect key="frame" x="50" y="40" width="359" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmO-Hm-ps3">
-                        <rect key="frame" x="409" y="50" width="359" height="15"/>
+                        <rect key="frame" x="50" y="55" width="359" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión Cerrar sesión Cerrar sesión Cerrar sesión" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPX-u9-3dl">
-                        <rect key="frame" x="50" y="70" width="718" height="45"/>
+                        <rect key="frame" x="50" y="70" width="718" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMR-J2-5cF">
-                        <rect key="frame" x="0.0" y="118" width="768" height="2"/>
+                        <rect key="frame" x="0.0" y="98" width="768" height="2"/>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="A_0_off" translatesAutoresizingMaskIntoConstraints="NO" id="0Y8-c6-gyC">
-                        <rect key="frame" x="11" y="70" width="31" height="30"/>
+                        <rect key="frame" x="8" y="55" width="25" height="25"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -342,7 +342,7 @@
                 <outlet property="lbl_fecha" destination="G50-9o-yZA" id="z15-aQ-ySo"/>
                 <outlet property="lbl_velocidad" destination="bmO-Hm-ps3" id="SIz-QM-B3u"/>
             </connections>
-            <point key="canvasLocation" x="1800" y="354"/>
+            <point key="canvasLocation" x="1800" y="359"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="161" id="SdR-9b-oHW" customClass="TableCellResumen">
             <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
@@ -441,6 +441,100 @@
                 <outlet property="lbl_velocidad" destination="jKd-EJ-VFa" id="dUT-V8-sma"/>
             </connections>
             <point key="canvasLocation" x="729" y="511"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="100" id="k8W-To-DYv" customClass="TableCellResumen">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k8W-To-DYv" id="3hJ-rb-VOQ">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qry-bq-nAe">
+                        <rect key="frame" x="50" y="10" width="364" height="15"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCK-yA-uYs">
+                        <rect key="frame" x="50" y="25" width="364" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIa-bG-3IB">
+                        <rect key="frame" x="50" y="40" width="182" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gw-Ta-ZsU">
+                        <rect key="frame" x="50" y="55" width="182" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión Cerrar sesión Cerrar sesión Cerrar sesión" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvQ-gg-lMW">
+                        <rect key="frame" x="50" y="70" width="364" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mi_ubicacion" translatesAutoresizingMaskIntoConstraints="NO" id="qyD-Vw-ABu">
+                        <rect key="frame" x="14" y="25" width="28" height="50"/>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lbl_direccion" destination="bvQ-gg-lMW" id="Of2-XY-bs2"/>
+                <outlet property="lbl_eco" destination="Qry-bq-nAe" id="Rfr-Aj-ONg"/>
+                <outlet property="lbl_evento" destination="aIa-bG-3IB" id="Vtq-fi-sQN"/>
+                <outlet property="lbl_fecha" destination="wCK-yA-uYs" id="4s6-wS-x5U"/>
+                <outlet property="lbl_velocidad" destination="5Gw-Ta-ZsU" id="gFt-mL-441"/>
+            </connections>
+            <point key="canvasLocation" x="1167" y="511"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="100" id="yQe-wA-skj" customClass="TableCellResumen">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yQe-wA-skj" id="PSg-Cl-3ac">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4w-gC-NkD">
+                        <rect key="frame" x="50" y="10" width="718" height="15"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ed0-WI-ZXT">
+                        <rect key="frame" x="50" y="25" width="718" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mi_ubicacion" translatesAutoresizingMaskIntoConstraints="NO" id="ykF-xv-fpF">
+                        <rect key="frame" x="14" y="23" width="28" height="50"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psX-ve-gV1">
+                        <rect key="frame" x="50" y="40" width="359" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmR-iX-h0d">
+                        <rect key="frame" x="50" y="55" width="359" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cerrar sesión Cerrar sesión Cerrar sesión Cerrar sesión" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sa-bH-Afx">
+                        <rect key="frame" x="50" y="70" width="718" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lbl_direccion" destination="6sa-bH-Afx" id="1v3-2x-sYB"/>
+                <outlet property="lbl_eco" destination="r4w-gC-NkD" id="nlx-Ov-yii"/>
+                <outlet property="lbl_evento" destination="psX-ve-gV1" id="MXn-vI-8e1"/>
+                <outlet property="lbl_fecha" destination="ed0-WI-ZXT" id="owc-T9-dZI"/>
+                <outlet property="lbl_velocidad" destination="qmR-iX-h0d" id="bf2-hx-1K1"/>
+            </connections>
+            <point key="canvasLocation" x="1800" y="511"/>
         </tableViewCell>
     </objects>
     <resources>

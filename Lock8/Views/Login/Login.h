@@ -28,15 +28,16 @@
     NSMutableString* currentElementString;
     NSString *StringCode;
     NSString *StringMsg;
+    
+    Reachability* internetReachable;
+    Reachability* hostReachable;
+    
 }
 
 -(IBAction)actualizarimagen:(id)sender;
 -(IBAction)check:(id)sender;
 -(IBAction)Login:(id)sender;
-@property (nonatomic) Reachability *hostReachability;
-@property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
--(void)ActualConnection:(Reachability*)reachability;
+-(void) checkNetworkStatus:(NSNotification *)notice;
 -(NSString*)ReadFileRecordar;
 -(void)EscribirArchivos;
 -(void)FillArray;

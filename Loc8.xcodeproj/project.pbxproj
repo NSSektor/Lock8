@@ -7,12 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883B2C621AEEF4FF00E86C7F /* NuevaConfiguracion.m in Sources */ = {isa = PBXBuildFile; fileRef = 883B2C591AEEF4FF00E86C7F /* NuevaConfiguracion.m */; };
+		883B2C631AEEF4FF00E86C7F /* ConfiguracionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 883B2C5B1AEEF4FF00E86C7F /* ConfiguracionMenu.m */; };
+		883B2C641AEEF4FF00E86C7F /* Configuracion_Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C5C1AEEF4FF00E86C7F /* Configuracion_Menu.xib */; };
+		883B2C651AEEF4FF00E86C7F /* NuevaConfiguracion.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C5D1AEEF4FF00E86C7F /* NuevaConfiguracion.xib */; };
+		883B2C661AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C5E1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone5.xib */; };
+		883B2C671AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C5F1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6.xib */; };
+		883B2C681AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C601AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6plus.xib */; };
+		883B2C691AEEF4FF00E86C7F /* NuevaConfiguracion_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883B2C611AEEF4FF00E86C7F /* NuevaConfiguracion_iPad.xib */; };
 		885694241ADDBBDE002127C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694231ADDBBDE002127C1 /* main.m */; };
 		885694271ADDBBDE002127C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694261ADDBBDE002127C1 /* AppDelegate.m */; };
 		8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8856942E1ADDBBDE002127C1 /* Images.xcassets */; };
 		8856943E1ADDBBDE002127C1 /* Lock8Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8856943D1ADDBBDE002127C1 /* Lock8Tests.m */; };
 		8856944A1ADDBE9E002127C1 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 885694481ADDBE9E002127C1 /* Login.m */; };
 		8856944B1ADDBE9E002127C1 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = 885694491ADDBE9E002127C1 /* Login.xib */; };
+		88583ED61AF2CE72006E339E /* GHWalkThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88583ECC1AF2CE72006E339E /* GHWalkThroughView.m */; };
+		88583ED71AF2CE72006E339E /* GHWalkThroughPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88583ECE1AF2CE72006E339E /* GHWalkThroughPageCell.m */; };
+		88583ED81AF2CE72006E339E /* ComoFunciona.m in Sources */ = {isa = PBXBuildFile; fileRef = 88583ED01AF2CE72006E339E /* ComoFunciona.m */; };
+		88583ED91AF2CE72006E339E /* ComoFunciona.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88583ED11AF2CE72006E339E /* ComoFunciona.xib */; };
+		88583EDA1AF2CE72006E339E /* ComoFunciona_iPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88583ED21AF2CE72006E339E /* ComoFunciona_iPhone5.xib */; };
+		88583EDB1AF2CE72006E339E /* ComoFunciona_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88583ED31AF2CE72006E339E /* ComoFunciona_iPhone6.xib */; };
+		88583EDC1AF2CE72006E339E /* ComoFunciona_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88583ED41AF2CE72006E339E /* ComoFunciona_iPhone6plus.xib */; };
+		88583EDD1AF2CE72006E339E /* ComoFunciona_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88583ED51AF2CE72006E339E /* ComoFunciona_iPad.xib */; };
 		889997061ADDC4DB008DFB2C /* Login_iPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997051ADDC4DB008DFB2C /* Login_iPhone5.xib */; };
 		889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997071ADDC667008DFB2C /* Login_iPhone6.xib */; };
 		8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */; };
@@ -34,6 +50,16 @@
 		88B590031AE71666000D509E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B590021AE71666000D509E /* OpenGLES.framework */; };
 		88B590051AE7166F000D509E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B590041AE7166F000D509E /* QuartzCore.framework */; };
 		88B590071AE71678000D509E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B590061AE71678000D509E /* SystemConfiguration.framework */; };
+		88BF8A741B29ED2100A78A34 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A731B29ED2100A78A34 /* CFNetwork.framework */; };
+		88BF8A761B29ED2F00A78A34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A751B29ED2F00A78A34 /* CoreGraphics.framework */; };
+		88BF8A781B29ED3800A78A34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A771B29ED3800A78A34 /* Foundation.framework */; };
+		88BF8A7A1B29ED4300A78A34 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A791B29ED4300A78A34 /* MobileCoreServices.framework */; };
+		88BF8A7C1B29ED4D00A78A34 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A7B1B29ED4D00A78A34 /* Security.framework */; };
+		88BF8A7E1B29ED6000A78A34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A7D1B29ED6000A78A34 /* UIKit.framework */; };
+		88BF8A801B29EDAA00A78A34 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A7F1B29EDAA00A78A34 /* libsqlite3.dylib */; };
+		88BF8A821B29EDB100A78A34 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A811B29EDB100A78A34 /* CoreTelephony.framework */; };
+		88BF8A851B29EE5400A78A34 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88BF8A841B29EE5400A78A34 /* AirshipConfig.plist */; };
+		88BF8A871B29F21500A78A34 /* libUAirship-6.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88BF8A861B29F21500A78A34 /* libUAirship-6.0.2.a */; };
 		88EE49151AE1A3DF00996058 /* Unidades.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EE49131AE1A3DF00996058 /* Unidades.m */; };
 		88EE49161AE1A3DF00996058 /* Unidades.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88EE49141AE1A3DF00996058 /* Unidades.xib */; };
 		88EE49181AE1A53C00996058 /* Unidades_iPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88EE49171AE1A53C00996058 /* Unidades_iPhone5.xib */; };
@@ -55,7 +81,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		88BF8A881B29F25C00A78A34 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		883B2C581AEEF4FF00E86C7F /* NuevaConfiguracion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuevaConfiguracion.h; sourceTree = "<group>"; };
+		883B2C591AEEF4FF00E86C7F /* NuevaConfiguracion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuevaConfiguracion.m; sourceTree = "<group>"; };
+		883B2C5A1AEEF4FF00E86C7F /* ConfiguracionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfiguracionMenu.h; sourceTree = "<group>"; };
+		883B2C5B1AEEF4FF00E86C7F /* ConfiguracionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfiguracionMenu.m; sourceTree = "<group>"; };
+		883B2C5C1AEEF4FF00E86C7F /* Configuracion_Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Configuracion_Menu.xib; sourceTree = "<group>"; };
+		883B2C5D1AEEF4FF00E86C7F /* NuevaConfiguracion.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NuevaConfiguracion.xib; sourceTree = "<group>"; };
+		883B2C5E1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NuevaConfiguracion_iPhone5.xib; sourceTree = "<group>"; };
+		883B2C5F1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NuevaConfiguracion_iPhone6.xib; sourceTree = "<group>"; };
+		883B2C601AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NuevaConfiguracion_iPhone6plus.xib; sourceTree = "<group>"; };
+		883B2C611AEEF4FF00E86C7F /* NuevaConfiguracion_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NuevaConfiguracion_iPad.xib; sourceTree = "<group>"; };
 		8856941E1ADDBBDE002127C1 /* Loc8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loc8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		885694221ADDBBDE002127C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		885694231ADDBBDE002127C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,6 +116,17 @@
 		885694471ADDBE9E002127C1 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Login.h; path = Views/Login/Login.h; sourceTree = "<group>"; };
 		885694481ADDBE9E002127C1 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Login.m; path = Views/Login/Login.m; sourceTree = "<group>"; };
 		885694491ADDBE9E002127C1 /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login.xib; path = Views/Login/Login.xib; sourceTree = "<group>"; };
+		88583ECB1AF2CE72006E339E /* GHWalkThroughView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHWalkThroughView.h; sourceTree = "<group>"; };
+		88583ECC1AF2CE72006E339E /* GHWalkThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHWalkThroughView.m; sourceTree = "<group>"; };
+		88583ECD1AF2CE72006E339E /* GHWalkThroughPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHWalkThroughPageCell.h; sourceTree = "<group>"; };
+		88583ECE1AF2CE72006E339E /* GHWalkThroughPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHWalkThroughPageCell.m; sourceTree = "<group>"; };
+		88583ECF1AF2CE72006E339E /* ComoFunciona.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComoFunciona.h; sourceTree = "<group>"; };
+		88583ED01AF2CE72006E339E /* ComoFunciona.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComoFunciona.m; sourceTree = "<group>"; };
+		88583ED11AF2CE72006E339E /* ComoFunciona.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComoFunciona.xib; sourceTree = "<group>"; };
+		88583ED21AF2CE72006E339E /* ComoFunciona_iPhone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComoFunciona_iPhone5.xib; sourceTree = "<group>"; };
+		88583ED31AF2CE72006E339E /* ComoFunciona_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComoFunciona_iPhone6.xib; sourceTree = "<group>"; };
+		88583ED41AF2CE72006E339E /* ComoFunciona_iPhone6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComoFunciona_iPhone6plus.xib; sourceTree = "<group>"; };
+		88583ED51AF2CE72006E339E /* ComoFunciona_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComoFunciona_iPad.xib; sourceTree = "<group>"; };
 		889997051ADDC4DB008DFB2C /* Login_iPhone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone5.xib; path = Views/Login/Login_iPhone5.xib; sourceTree = "<group>"; };
 		889997071ADDC667008DFB2C /* Login_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6.xib; path = Views/Login/Login_iPhone6.xib; sourceTree = "<group>"; };
 		889997091ADDC6D4008DFB2C /* Login_iPhone6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Login_iPhone6plus.xib; path = Views/Login/Login_iPhone6plus.xib; sourceTree = "<group>"; };
@@ -93,6 +152,17 @@
 		88B590021AE71666000D509E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		88B590041AE7166F000D509E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88B590061AE71678000D509E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		88BF8A731B29ED2100A78A34 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		88BF8A751B29ED2F00A78A34 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		88BF8A771B29ED3800A78A34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88BF8A791B29ED4300A78A34 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		88BF8A7B1B29ED4D00A78A34 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		88BF8A7D1B29ED6000A78A34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		88BF8A7F1B29EDAA00A78A34 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		88BF8A811B29EDB100A78A34 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		88BF8A841B29EE5400A78A34 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
+		88BF8A861B29F21500A78A34 /* libUAirship-6.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-6.0.2.a"; path = "libUAirship-latest/Airship/libUAirship-6.0.2.a"; sourceTree = "<group>"; };
+		88BF8A891B29F27A00A78A34 /* AirshipKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AirshipKit.framework; path = "libUAirship-latest/Airship/AirshipKit.framework"; sourceTree = "<group>"; };
 		88EE49121AE1A3DE00996058 /* Unidades.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unidades.h; path = Views/Unidades/Unidades.h; sourceTree = "<group>"; };
 		88EE49131AE1A3DF00996058 /* Unidades.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Unidades.m; path = Views/Unidades/Unidades.m; sourceTree = "<group>"; };
 		88EE49141AE1A3DF00996058 /* Unidades.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Unidades.xib; path = Views/Unidades/Unidades.xib; sourceTree = "<group>"; };
@@ -112,16 +182,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BF8A871B29F21500A78A34 /* libUAirship-6.0.2.a in Frameworks */,
+				88B58FF51AE71628000D509E /* CoreLocation.framework in Frameworks */,
+				88BF8A821B29EDB100A78A34 /* CoreTelephony.framework in Frameworks */,
+				88BF8A801B29EDAA00A78A34 /* libsqlite3.dylib in Frameworks */,
+				88B590011AE71660000D509E /* libz.dylib in Frameworks */,
+				88BF8A7E1B29ED6000A78A34 /* UIKit.framework in Frameworks */,
 				88B590071AE71678000D509E /* SystemConfiguration.framework in Frameworks */,
+				88BF8A7C1B29ED4D00A78A34 /* Security.framework in Frameworks */,
+				88BF8A7A1B29ED4300A78A34 /* MobileCoreServices.framework in Frameworks */,
+				88BF8A781B29ED3800A78A34 /* Foundation.framework in Frameworks */,
+				88BF8A761B29ED2F00A78A34 /* CoreGraphics.framework in Frameworks */,
+				88BF8A741B29ED2100A78A34 /* CFNetwork.framework in Frameworks */,
 				88B590051AE7166F000D509E /* QuartzCore.framework in Frameworks */,
 				88B590031AE71666000D509E /* OpenGLES.framework in Frameworks */,
-				88B590011AE71660000D509E /* libz.dylib in Frameworks */,
 				88B58FFF1AE71657000D509E /* libicucore.dylib in Frameworks */,
 				88B58FFD1AE71648000D509E /* libc++.dylib in Frameworks */,
 				88B58FFB1AE7163F000D509E /* ImageIO.framework in Frameworks */,
 				88B58FF91AE71637000D509E /* GLKit.framework in Frameworks */,
 				88B58FF71AE71631000D509E /* CoreText.framework in Frameworks */,
-				88B58FF51AE71628000D509E /* CoreLocation.framework in Frameworks */,
 				88B58FF31AE7161F000D509E /* CoreData.framework in Frameworks */,
 				88B58FF11AE71617000D509E /* AVFoundation.framework in Frameworks */,
 				88B58FED1AE715C7000D509E /* GoogleMaps.framework in Frameworks */,
@@ -141,6 +220,16 @@
 		885694151ADDBBDD002127C1 = {
 			isa = PBXGroup;
 			children = (
+				88BF8A891B29F27A00A78A34 /* AirshipKit.framework */,
+				88BF8A861B29F21500A78A34 /* libUAirship-6.0.2.a */,
+				88BF8A811B29EDB100A78A34 /* CoreTelephony.framework */,
+				88BF8A7F1B29EDAA00A78A34 /* libsqlite3.dylib */,
+				88BF8A7D1B29ED6000A78A34 /* UIKit.framework */,
+				88BF8A7B1B29ED4D00A78A34 /* Security.framework */,
+				88BF8A791B29ED4300A78A34 /* MobileCoreServices.framework */,
+				88BF8A771B29ED3800A78A34 /* Foundation.framework */,
+				88BF8A751B29ED2F00A78A34 /* CoreGraphics.framework */,
+				88BF8A731B29ED2100A78A34 /* CFNetwork.framework */,
 				88B590061AE71678000D509E /* SystemConfiguration.framework */,
 				88B590041AE7166F000D509E /* QuartzCore.framework */,
 				88B590021AE71666000D509E /* OpenGLES.framework */,
@@ -186,6 +275,7 @@
 		885694211ADDBBDE002127C1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				88BF8A841B29EE5400A78A34 /* AirshipConfig.plist */,
 				885694221ADDBBDE002127C1 /* Info.plist */,
 				885694231ADDBBDE002127C1 /* main.m */,
 				889997121ADDCB18008DFB2C /* Strings.strings */,
@@ -213,6 +303,16 @@
 		889997021ADDC214008DFB2C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				883B2C581AEEF4FF00E86C7F /* NuevaConfiguracion.h */,
+				883B2C591AEEF4FF00E86C7F /* NuevaConfiguracion.m */,
+				883B2C5A1AEEF4FF00E86C7F /* ConfiguracionMenu.h */,
+				883B2C5B1AEEF4FF00E86C7F /* ConfiguracionMenu.m */,
+				883B2C5C1AEEF4FF00E86C7F /* Configuracion_Menu.xib */,
+				883B2C5D1AEEF4FF00E86C7F /* NuevaConfiguracion.xib */,
+				883B2C5E1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone5.xib */,
+				883B2C5F1AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6.xib */,
+				883B2C601AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6plus.xib */,
+				883B2C611AEEF4FF00E86C7F /* NuevaConfiguracion_iPad.xib */,
 				889997031ADDC221008DFB2C /* Login */,
 				88EE491F1AE1ABD100996058 /* Unidades */,
 			);
@@ -296,6 +396,17 @@
 		88EE49271AE1AD8F00996058 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				88583ECB1AF2CE72006E339E /* GHWalkThroughView.h */,
+				88583ECC1AF2CE72006E339E /* GHWalkThroughView.m */,
+				88583ECD1AF2CE72006E339E /* GHWalkThroughPageCell.h */,
+				88583ECE1AF2CE72006E339E /* GHWalkThroughPageCell.m */,
+				88583ECF1AF2CE72006E339E /* ComoFunciona.h */,
+				88583ED01AF2CE72006E339E /* ComoFunciona.m */,
+				88583ED11AF2CE72006E339E /* ComoFunciona.xib */,
+				88583ED21AF2CE72006E339E /* ComoFunciona_iPhone5.xib */,
+				88583ED31AF2CE72006E339E /* ComoFunciona_iPhone6.xib */,
+				88583ED41AF2CE72006E339E /* ComoFunciona_iPhone6plus.xib */,
+				88583ED51AF2CE72006E339E /* ComoFunciona_iPad.xib */,
 				88EE49261AE1AD8400996058 /* TableCellResumen */,
 				8899EDAA1AE0123B00D5B107 /* SYSoapTool */,
 				8899EDA31AE00E0100D5B107 /* Reachability */,
@@ -313,6 +424,7 @@
 				8856941A1ADDBBDE002127C1 /* Sources */,
 				8856941B1ADDBBDE002127C1 /* Frameworks */,
 				8856941C1ADDBBDE002127C1 /* Resources */,
+				88BF8A881B29F25C00A78A34 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -352,9 +464,13 @@
 				TargetAttributes = {
 					8856941D1ADDBBDE002127C1 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = JEG2244Q98;
 						SystemCapabilities = {
-							com.apple.Maps.iOS = {
+							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
 							};
 						};
 					};
@@ -392,17 +508,29 @@
 				88EE49181AE1A53C00996058 /* Unidades_iPhone5.xib in Resources */,
 				889997081ADDC667008DFB2C /* Login_iPhone6.xib in Resources */,
 				88EE491A1AE1AB6600996058 /* Unidades_iPhone6.xib in Resources */,
+				88BF8A851B29EE5400A78A34 /* AirshipConfig.plist in Resources */,
 				889997101ADDCB18008DFB2C /* Strings.strings in Resources */,
 				88EE491E1AE1ABB300996058 /* Unidades_iPad.xib in Resources */,
+				883B2C641AEEF4FF00E86C7F /* Configuracion_Menu.xib in Resources */,
 				88EE49161AE1A3DF00996058 /* Unidades.xib in Resources */,
+				883B2C671AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6.xib in Resources */,
 				88EE49251AE1AD7D00996058 /* TableCellResumen.xib in Resources */,
 				88EE491C1AE1AB8D00996058 /* Unidades_iPhone6plus.xib in Resources */,
+				88583EDB1AF2CE72006E339E /* ComoFunciona_iPhone6.xib in Resources */,
+				88583EDD1AF2CE72006E339E /* ComoFunciona_iPad.xib in Resources */,
 				8856942F1ADDBBDE002127C1 /* Images.xcassets in Resources */,
 				8899970A1ADDC6D4008DFB2C /* Login_iPhone6plus.xib in Resources */,
 				889997061ADDC4DB008DFB2C /* Login_iPhone5.xib in Resources */,
 				8856944B1ADDBE9E002127C1 /* Login.xib in Resources */,
+				883B2C661AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone5.xib in Resources */,
+				883B2C651AEEF4FF00E86C7F /* NuevaConfiguracion.xib in Resources */,
+				88583ED91AF2CE72006E339E /* ComoFunciona.xib in Resources */,
+				88583EDC1AF2CE72006E339E /* ComoFunciona_iPhone6plus.xib in Resources */,
+				88583EDA1AF2CE72006E339E /* ComoFunciona_iPhone5.xib in Resources */,
 				8899970C1ADDC718008DFB2C /* Login_iPad.xib in Resources */,
+				883B2C681AEEF4FF00E86C7F /* NuevaConfiguracion_iPhone6plus.xib in Resources */,
 				88B58FEF1AE715DB000D509E /* GoogleMaps.bundle in Resources */,
+				883B2C691AEEF4FF00E86C7F /* NuevaConfiguracion_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,8 +554,13 @@
 				88F295211ADF283B008C7D74 /* Reachability.m in Sources */,
 				88EE49241AE1AD7D00996058 /* TableCellResumen.m in Sources */,
 				8899EDA61AE010D400D5B107 /* SYSoapTool.m in Sources */,
+				88583ED71AF2CE72006E339E /* GHWalkThroughPageCell.m in Sources */,
+				883B2C621AEEF4FF00E86C7F /* NuevaConfiguracion.m in Sources */,
+				88583ED81AF2CE72006E339E /* ComoFunciona.m in Sources */,
 				885694241ADDBBDE002127C1 /* main.m in Sources */,
+				883B2C631AEEF4FF00E86C7F /* ConfiguracionMenu.m in Sources */,
 				88EE49151AE1A3DF00996058 /* Unidades.m in Sources */,
+				88583ED61AF2CE72006E339E /* GHWalkThroughView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,14 +683,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RICOM COMERCIALIZADORA, S.A. DE C.V. (JEG2244Q98)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RICOM COMERCIALIZADORA, S.A. DE C.V. (JEG2244Q98)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libUAirship-latest/Airship",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/includeAirship/**",
 				);
 				INFOPLIST_FILE = Lock8/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libUAirship-latest/Airship",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Loc8;
+				PROVISIONING_PROFILE = "dd2c47bd-3d00-4833-a8c6-91062ecee02a";
 			};
 			name = Debug;
 		};
@@ -566,14 +712,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RICOM COMERCIALIZADORA, S.A. DE C.V. (JEG2244Q98)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RICOM COMERCIALIZADORA, S.A. DE C.V. (JEG2244Q98)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libUAirship-latest/Airship",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/includeAirship/**",
 				);
 				INFOPLIST_FILE = Lock8/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libUAirship-latest/Airship",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Loc8;
+				PROVISIONING_PROFILE = "dd2c47bd-3d00-4833-a8c6-91062ecee02a";
 			};
 			name = Release;
 		};

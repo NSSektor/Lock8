@@ -56,7 +56,7 @@
 
 
 NSString *kReachabilityChangedNotification = @"kNetworkReachabilityChangedNotification";
-
+NetworkStatus returnValue;
 
 #pragma mark - Supporting functions
 
@@ -227,6 +227,9 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 - (NetworkStatus)networkStatusForFlags:(SCNetworkReachabilityFlags)flags
 {
+    
+    returnValue = NotReachable;
+    
 	PrintReachabilityFlags(flags, "networkStatusForFlags");
 	if ((flags & kSCNetworkReachabilityFlagsReachable) == 0)
 	{
@@ -234,7 +237,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 		return NotReachable;
 	}
 
-    NetworkStatus returnValue = NotReachable;
+    returnValue = NotReachable;
 
 	if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
 	{

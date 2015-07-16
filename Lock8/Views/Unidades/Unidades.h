@@ -48,6 +48,8 @@
     UITextView* txt_descripcion_incidencia;
     UITableView* tbl_incidencias;
     
+    NSTimer *contadorTimer;
+    
     
     ////xml///
     NSString* currentElement;
@@ -55,6 +57,9 @@
     NSMutableString* currentElementString;
     NSString *StringCode;
     NSString *StringMsg;
+    
+    Reachability* internetReachable;
+    Reachability* hostReachable;
 }
 
 -(IBAction)ShowMenu:(id)sender;
@@ -72,10 +77,9 @@
 -(IBAction)Cancelar_Actualizacion_unidad:(id)sender;
 -(void)FillArray;
 -(void)CargarMapa;
-@property (nonatomic) Reachability *hostReachability;
-@property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
--(void)ActualConnection:(Reachability*)reachability;
-
+-(void)actualizarxtimer:(id)sender;
+-(IBAction)actualizar:(id)sender;
+-(void)EscribirArchivos;
+-(void) checkNetworkStatus:(NSNotification *)notice;
 
 @end

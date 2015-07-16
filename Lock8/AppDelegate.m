@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "Login.h"
+#import <AirshipKit/AirshipKit.h>
 
 @interface AppDelegate ()
 
@@ -26,6 +27,7 @@ NSString* vista_activa;
 CGRect rect_original_login;
 CGRect rect_original_unidades;
 UIView* sub_contenedor_incidencia;
+NSString* DeviceToken;
 
 @implementation AppDelegate
 
@@ -35,7 +37,17 @@ UIView* sub_contenedor_incidencia;
 {
     [GMSServices provideAPIKey:@"AIzaSyCdW9ZhpakPult1DJRhjBL1M1KM4mvBSgY"];
     
-    url_web_service = @"http://201.131.96.37/wbs_tracking5.php?wsdl";
+    
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
+    [UAirship push].userNotificationTypes = (UIUserNotificationTypeAlert |
+                                             UIUserNotificationTypeBadge |
+                                             UIUserNotificationTypeSound);
+    
+    [UAirship push].userPushNotificationsEnabled = YES;
+    
+    
+    url_web_service = @"http://201.131.96.37/wbs_loc8.php?wsdl";
     GlobalString = @"";
     NSArray *paths = NSSearchPathForDirectoriesInDomains
     (NSDocumentDirectory, NSUserDomainMask, YES);
@@ -74,9 +86,59 @@ UIView* sub_contenedor_incidencia;
     
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    UA_LINFO(@"Received remote notification (in appDelegate): %@", userInfo);
+    // Reset the badge after a push is received in a active or inactive state
+    if (application.applicationState != UIApplicationStateBackground)
+        [[UAirship push] resetBadge];
+    
+}
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"content---%@", token);
+    
+}
+
+- (void)registrationSucceededForChannelID:(NSString *)channelID deviceToken:(NSString *)deviceToken{
+    DeviceToken = deviceToken;
+}
+
+// Returns YES if the application is currently registered for remote notifications, taking into account any systemwide settings; doesn't relate to connectivity.
+- (BOOL)isRegisteredForRemoteNotifications{
+    return YES;
+}
+
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    UA_LTRACE(@"Application did register with user notification types %ld", (unsigned long)notificationSettings.types);
+    // [[UAPush shared] appRegisteredUserNotificationSettings];
+    [[UAirship push] appRegisteredUserNotificationSettings];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
+    UA_LERR(@"Application failed to register for remote notifications with error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    UA_LINFO(@"Application received remote notification: %@", userInfo);
+    [[UAirship push] appReceivedRemoteNotification:userInfo applicationState:application.applicationState];
+}
+
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())handler {
+    UA_LINFO(@"Received remote notification button interaction: %@ notification: %@", identifier, userInfo);
+    [[UAirship push] appReceivedActionWithIdentifier:identifier notification:userInfo applicationState:application.applicationState completionHandler:handler];
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[UAirship push] resetBadge];
+    [[UAirship push] setBadgeNumber:0];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -95,5 +157,4 @@ UIView* sub_contenedor_incidencia;
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 @end
